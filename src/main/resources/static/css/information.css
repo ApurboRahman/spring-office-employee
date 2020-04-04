@@ -1,0 +1,23 @@
+.InfoArea {
+	background-color: white;
+	width: 95%;
+}
+
+.text-black {
+	color: black;
+}
+
+.info-separator {
+	width: 100%;
+}
+
+.notification-title {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.informationArea {
+	color: #fff;
+	background-color: #dc3545;
+	border-color: #dc3545;
+}

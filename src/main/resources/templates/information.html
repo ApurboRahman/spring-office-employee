@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="fragments/common/head :: head(title='Employee Inv | Dashboard')"></head>
+	<body id="page-top">
+		<div id="wrapper">
+			<div th:replace="base :: menu"></div>
+			<div class="d-flex flex-column" id="content-wrapper">
+				<div th:replace="base :: header"></div>
+				<hr class="info-separator">
+			    <h3 class="text-danger ml-2">お知らせ</h3>
+			    <hr class="info-separator">
+			    <div class="border rounded border-danger mx-auto InfoArea" id="InformationArea">
+			        <h5 class="informationArea text-white">お知らせ</h5>
+			        <div class="border-danger"><span class="text-black"></span></div>
+			    </div>
+			    <hr class="info-separator">
+			    <div th:if="${messageShow}" class="border rounded border-danger mx-auto InfoArea" id="ImplStatusArea">
+			        <h5 class="bg-danger text-white notification-title">実施状況</h5>
+			        <div class="border-danger"><span class="text-black" th:text="${message}"><br></span></div>
+			    </div>
+    			<hr th:if="${messageShow}" class="info-separator">
+			</div>
+		</div>
+	   <div th:replace="base :: footer"></div>
+	</body>
+</html>
