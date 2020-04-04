@@ -1,0 +1,61 @@
+a.acctext {
+    font-size: small;
+    color: black;
+}
+
+#acclist {
+    color: black;
+}
+
+#TanaMenuBtn[aria-expanded=true]:after {
+    content: "-棚卸";
+}
+
+#TanaMenuBtn[aria-expanded=false]:after {
+    content: "+棚卸";
+}
+
+#KanriMenuBtn[aria-expanded=false]:after {
+    content: "+管理者";
+}
+
+#KanriMenuBtn[aria-expanded=true]:after {
+    content: "-管理者";
+}
+
+#logout {
+    color: #dc3545;
+}
+
+#MyName {
+    margin-bottom: 0px;
+}
+
+
+.h3, h3 {
+}
+
+.text-black {
+    color: black;
+}
+
+.InfoArea {
+    background-color: white;
+    max-width: 95%;
+    /*margin-left: 2%;*/
+}
+
+.nav-wrapper {
+    width: 14rem !important;
+}
+
+#inv-nav-bar {
+    width: 100% !important;
+}
+
+
+.menuArea {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}

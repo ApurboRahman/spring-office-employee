@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="thhp://www.thymeleaf.org">
+<head th:replace="fragments/common/head :: head"></head>
+<body>
+<div th:fragment="header">
+	<nav th:replace="fragments/common/header :: header"></nav>
+</div>
+<div th:fragment="menu" class="nav-wrapper">
+	<nav th:replace="fragments/common/menu :: menu"></nav>
+</div>
+<div th:fragment="footer">
+	<footer th:replace="fragments/common/footer :: footer"></footer>
+</div>
+</body>
+</html>

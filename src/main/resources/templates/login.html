@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/login/head :: head(title='Employee Inv | Login')"></head>
+
+
+<body>
+
+	<main class="page login-page">
+
+		<section class="clean-block clean-form dark">
+			<nav th:replace="fragments/login/header :: header"></nav>
+
+			<div class="container">
+				<div class="block-heading adjust-border-height"></div>
+
+				<div th:if="${loginError}" class="alert alert-danger login-error"><span th:text="#{invalidCredentials}"></span></div>
+				<div th:errors="${loginForm.*}" class="alert alert-danger login-error"></div>
+
+				<form class="border-danger" th:action="@{/}" th:object=${loginForm}
+					method="post">
+					<div class="form-group">
+						<label for="loginid">ログインID</label> 
+						<input class="form-control item" type="text" id="loginid" name="username" placeholder="ログインID">
+					</div>
+
+					<div class="form-group">
+						<label for="password">パスワード</label> 
+						<input class="form-control" type="password" id="password" name="password" placeholder="パスワード">
+					</div>
+
+					<input class="form-control btn btn-danger" type="submit" value="ログイン">
+				</form>
+			</div>
+		</section>
+
+	</main>
+
+	<div th:replace="fragments/login/footer :: footer"></div>
+</body>
+
+</html>
