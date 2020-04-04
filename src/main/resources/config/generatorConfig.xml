@@ -76,9 +76,12 @@
 	    </javaClientGenerator>
 
 		<!-- 自動生成対象のテーブル名を[tableName]に指定する -->
-		<table tableName="employee_info"></table>
+			<table tableName="employee_info"></table>
 			<table tableName="users_account"></table>
 			<table tableName="employees_m"></table>
 			<table tableName="system_params"></table>
+			<table tableName="menus"></table>
+			<table tableName="roles"></table>
+			<table tableName="role_menu_permissions"></table>
 	</context>
 </generatorConfiguration>
