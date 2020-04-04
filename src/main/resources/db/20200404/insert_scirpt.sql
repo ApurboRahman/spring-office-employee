@@ -70,3 +70,49 @@ VALUES (1, 3, 1, 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM'),
        (24, 9, 6, 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM'),
        (25, 10, 6, 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM'),
        (26, 11, 6, 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+INSERT INTO JOB_POSTS(
+	post_code, post_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('9999', '一般', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+INSERT INTO JOB_POSTS(
+	post_code, post_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('9989', '課長以上', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+INSERT INTO JOB_POSTS(
+	post_code, post_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('9980', '課長以上', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+INSERT INTO JOB_POSTS(
+	post_code, post_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('0001', '一般', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+INSERT INTO JOB_POSTS(
+	post_code, post_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('0002', '一般', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+INSERT INTO JOB_POSTS(
+	post_code, post_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('0003', '課長以上', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+INSERT INTO JOB_POSTS(
+	post_code, post_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('1100', '課長', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+
+
+INSERT INTO DEPARTMENTS(
+	dept_code, dept_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('123456', '事業本部部課', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+INSERT INTO DEPARTMENTS(
+	dept_code, dept_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('123457', '事業本部部課', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+INSERT INTO DEPARTMENTS(
+	dept_code, dept_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('123458', '事業本部部課', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');
+
+INSERT INTO DEPARTMENTS(
+	dept_code, dept_name, create_user, create_date, create_pgid, update_user, update_date, update_pgid)
+	VALUES ('123459', '事業本部部課', 'SYSTEM', now(), 'SYSTEM', 'SYSTEM', now(), 'SYSTEM');

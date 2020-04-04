@@ -83,5 +83,7 @@
 			<table tableName="menus"></table>
 			<table tableName="roles"></table>
 			<table tableName="role_menu_permissions"></table>
+			<table tableName="departments"></table>
+			<table tableName="job_posts"></table>
 	</context>
 </generatorConfiguration>
