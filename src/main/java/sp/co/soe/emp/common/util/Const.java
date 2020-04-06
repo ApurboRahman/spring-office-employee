@@ -9,7 +9,7 @@ public class Const {
 	public static final String LANDING_URL ="/";
 	public static final String LOGIN_URL ="/login";
 	public static final String LOGOUT_URL ="/logout";
-	public static final String INFORMATION_URL ="/logout";
+	public static final String INFORMATION_URL ="/information";
 	public static final String LOGIN_ERROR ="/login-error";
 	public static final String ERROR_URL ="/error";
 

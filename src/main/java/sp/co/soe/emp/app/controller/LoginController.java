@@ -34,11 +34,10 @@ public class LoginController {
             return Const.LOGIN;
         }
 
-
         try {
             UsernamePasswordAuthenticationToken authReq = new UsernamePasswordAuthenticationToken(loginForm.getUsername(), loginForm.getPassword());
             SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(authReq));
-            return Const.INFORMATION;
+            return "redirect:/information";
         } catch (Exception ex) {
             ex.printStackTrace();
             return Const.LOGIN;
