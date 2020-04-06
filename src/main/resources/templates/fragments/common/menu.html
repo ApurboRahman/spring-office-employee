@@ -1,47 +1,64 @@
 <nav th:fragment="menu" class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion menuArea p-0" id="inv-nav-bar">
     <div class="container-fluid d-flex flex-column p-0">
         <ul class="nav navbar-nav text-light" id="accordionSidebar">
-            <li th:each="eList : ${session.entities}" class="nav-item" role="presentation">
-                <div th:if="${#strings.toString(eList) == 'INVENTORY'}" class="text-black">
-                    <a class="btn btn-primary" data-toggle="collapse" aria-expanded="true"
+            <li class="nav-item" role="presentation">
+                <div th:if="${#strings.contains(session.menus,'__#{inventory}__')}" class="text-black">
+                    <a class="btn menuArea" data-toggle="collapse" aria-expanded="true"
                         aria-controls="collapse-Inv" href="#collapse-Inv" role="button" id="TanaMenuBtn"></a>
                     <div class="collapse show" id="collapse-Inv">
-                        <ul th:each="invList : ${session.entities}">
-                            <li th:if="${#strings.toString(invList)} == 'SECURITY_CARD_INVENTORY'">
-                            	<a href="#" id="MenuCardInventory" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">セキュリティカード棚卸</a>
+                        <ul>
+                            <li th:if="${#strings.contains(session.menus,'__#{securityCardInventory}__')}">
+                            	<a href="#" id="MenuCardInventory" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<span th:text="__#{securityCardInventoryTitle}__"></span>
+								</a>
                             </li>
-                            <li th:if="${#strings.toString(invList)} == 'VPN_DONGLE_INVENTORY'">
-                            	<a href="#" id="MenuVpnInventory" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">VPNドングル棚卸</a>
+                            <li th:if="${#strings.contains(session.menus,'__#{vpnDongleInventory}__')}">
+                            	<a href="#" id="MenuVpnInventory" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<span th:text="__#{vpnDongleInventoryTitle}__"></span>
+                            	</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div th:if="${#strings.toString(eList) == 'ADDMINISTRATION'}" class="text-black">
-                    <a class=" btn btn-primary" data-toggle="collapse" aria-expanded="true"
+                <div th:if="${#strings.contains(session.menus,'__#{administration}__')}" class="text-black">
+                    <a class=" btn menuArea" data-toggle="collapse" aria-expanded="true"
                         aria-controls="collapse-Kanri" href="#collapse-Kanri" role="button"
                         id="KanriMenuBtn"></a>
                     <div class="collapse show" id="collapse-Kanri">
-                        <ul th:each="adminList : ${session.entities}">
-                            <li th:if="${#strings.toString(adminList)} == 'MASTER_REGISTRATION'" th:class="${#strings.contains(#httpServletRequest.requestURI, '/master-registration') ? 'text-white' : ''}">
-                            	<a th:href="@{/master-registration}" id="MenuMasterRegister" th:class="${#strings.contains(#httpServletRequest.requestURI, '/master-registration') ? 'text-white' : 'acctext'}">マスタ登録</a>
+                        <ul>
+                            <li th:if="${#strings.contains(session.menus,'__#{masterRegistration}__')}" th:class="${#strings.contains(#httpServletRequest.requestURI, '/master-registration') ? 'text-white' : ''}">
+                            	<a th:href="@{/master-registration}" id="MenuMasterRegister" th:class="${#strings.contains(#httpServletRequest.requestURI, '/master-registration') ? 'text-white' : 'acctext'}">
+                            	<span th:text="__#{masterRegistrationTitle}__"></span></a>
                             </li>
-                            <li th:if="${#strings.toString(adminList)} == 'LEDGER_CREATION'" th:class="${#strings.contains(#httpServletRequest.requestURI, '/ledger') ? 'text-white' : ''}">
-                            	<a th:href="@{/ledger}" id="MenuDaityoCreate" th:class="${#strings.contains(#httpServletRequest.requestURI, '/ledger') ? 'text-white' : 'acctext'}">台帳作成</a>
+                            <li th:if="${#strings.contains(session.menus,'__#{ledgerCreation}__')}" th:class="${#strings.contains(#httpServletRequest.requestURI, '/ledger') ? 'text-white' : ''}">
+                            	<a th:href="@{/ledger}" id="MenuDaityoCreate" th:class="${#strings.contains(#httpServletRequest.requestURI, '/ledger') ? 'text-white' : 'acctext'}">
+                            	<span th:text="__#{ledgerCreationTitle}__"></span>
+                            	</a>
                            	</li>
-                            <li th:if="${#strings.toString(adminList)} == 'INVENTORY_REQUEST_REMIND_SEND'">
-                            	<a href="#" id="MenuMailSend" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">棚卸依頼／リマインド送信</a>
+                            <li th:if="${#strings.contains(session.menus,'__#{inventoryRequest}__')}">
+                            	<a href="#" id="MenuMailSend" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<span th:text="__#{inventoryRequestTitle}__"></span>
+                            	</a>
                             </li>
-                            <li th:if="${#strings.toString(adminList)} == 'MONTHLY_CLOSING'">
-                            	<a href="#" id="MenuMonthClose" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">月次締め</a>
+                            <li th:if="${#strings.contains(session.menus,'__#{monthlyClosing}__')}">
+                            	<a href="#" id="MenuMonthClose" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<span th:text="__#{monthlyClosingTitle}__"></span>
+                            	</a>
                             </li>
-                            <li th:if="${#strings.toString(adminList)} == 'BATCH_SCHEDULE'">
-                            	<a href="#" id="MenuBatchSchedule" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">バッチスケジュール設定</a>
+                             <li th:if="${#strings.contains(session.menus,'__#{batchSchedule}__')}">
+                            	<a href="#" id="MenuBatchSchedule" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<span th:text="__#{batchScheduleTitle}__"></span>
+                            	</a>
                             </li>
-                            <li th:if="${#strings.toString(adminList)} == 'USER_PERMISSION_SETTINGS'">
-                            	<a href="#" id="MenuUserSetting" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">ユーザー権限設定</a>
+                            <li th:if="${#strings.contains(session.menus,'__#{userPermission}__')}">
+                            	<a href="#" id="MenuUserSetting" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<span th:text="__#{userPermissionTitle}__"></span>
+                            	</a>
                             </li>
-                            <li th:if="${#strings.toString(adminList)} == 'INVENTORY_STATUS_CONFIRMATION'">
-                            	<a href="#" id="MenuStatusConfirm" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">棚卸状況確認</a>
+                            <li th:if="${#strings.contains(session.menus,'__#{inventoryStatus}__')}">
+                            	<a href="#" id="MenuStatusConfirm" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<span th:text="__#{inventoryStatusTitle}__"></span>
+                            	</a>
                             </li>
                         </ul>
                     </div>

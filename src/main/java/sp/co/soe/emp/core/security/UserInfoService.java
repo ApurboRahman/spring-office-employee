@@ -37,31 +37,29 @@ public class UserInfoService implements UserDetailsService {
     private SystemParamsExample systemParamsExample;
 
     @Override
-    public UserDetails loadUserByUsername(String username){
+    public UserDetails loadUserByUsername(String username) {
         accountExample.clear();
         accountExample.createCriteria().andUserNameEqualTo(username)
                 .andActiveEqualTo(true).andDeleteEqualTo(false)
                 .andValidateStartDateLessThanOrEqualTo(new Date())
                 .andValidateEndDateGreaterThanOrEqualTo(new Date());
 
-        UsersAccount account = new UsersAccount();
 
-        List<UsersAccount> accountList =  usersAccountMapper.selectByExample(accountExample);
-        if (accountList.size() != 0) {
-           account= accountList.get(0);
+        List<UsersAccount> accountList = usersAccountMapper.selectByExample(accountExample);
+        if (accountList.size() == 0) {
+            throw new UsernameNotFoundException("User not found: " + username);
         }
+        UsersAccount account = accountList.get(0);
         Collection<GrantedAuthority> authorities;
         List<String> roleList = new ArrayList<>();
 
         roleList.add(Role.EMPLOYEE.name());
 
         EmployeesM employee = employeesMMapper.selectByPrimaryKey(username);
-        if(employee==null){
+        if (employee == null) {
             throw new UsernameNotFoundException("User not found: " + username);
         }
-        if(employee.getCommCode()){
-            roleList.add(Role.SECURITY_COMMITTEE.name());
-        }
+
         systemParamsExample.clear();
         systemParamsExample.createCriteria().andParamCd1EqualTo(Const.businessPlannerCD1)
                 .andParamNm1EqualTo(Const.businessPlannerParamNm1).andParamCd2EqualTo(employee.getDeptCode());
@@ -79,9 +77,11 @@ public class UserInfoService implements UserDetailsService {
         if (systemParams != 0) {
             roleList.add(Role.SECTION_MANAGER_AND_ABOVE.name());
         }
-
+        if (employee.getCommCode()) {
+            roleList.add(Role.SECURITY_COMMITTEE.name());
+        }
         String[] roles = roleList.toArray(new String[roleList.size()]);
         authorities = AuthorityUtils.createAuthorityList(roles);
-        return new UserInfoEntity(account,authorities,true);
+        return new UserInfoEntity(account, authorities, true);
     }
 }

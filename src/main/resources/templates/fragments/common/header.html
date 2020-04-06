@@ -1,11 +1,11 @@
 <nav th:fragment="header" class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
 
     <div class="container-fluid">
-    	<a class="text-danger" id="TitleLink" th:href="@{/dashboard}">棚卸システム</a>
+    	<a class="text-danger" id="TitleLink" th:href="@{/information}">棚卸システム</a>
 
         <ul class="nav navbar-nav flex-nowrap ml-auto">
             <li class="nav-item d-flex align-items-center align-items-xl-center dropdown no-arrow mx-1" role="presentation">
-                <h6 class="align-items-lg-start" id="MyName"><span th:text="${session?.user?.userNm}"></span></h6>
+                <h6 class="align-items-lg-start" id="MyName"><span th:text="${session?.user?.firstName}"></span></h6>
             </li>
 
             <li class="nav-item dropdown no-arrow mx-1" role="presentation">
