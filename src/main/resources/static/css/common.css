@@ -1,0 +1,32 @@
+.custom-file-label-danger {
+    left: 0;
+    z-index: 1;
+    height: calc(1.5em + .75rem + 2px);
+    font-weight: 400;
+    background-color: #fff;
+    border: 1px solid #d1d3e2;
+    border-radius: .35rem;
+}
+
+#content-wrapper-danger {
+    background-color: #e214140f;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
+.form-control-danger {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6e707e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #e0352452;
+    border-radius: .35rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}

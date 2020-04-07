@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace="fragments/common/head :: head(title='Employee Inv | Master Registration')"></head>
+
+	<body id="page-top">
+
+		<div id="wrapper">
+			<div th:replace="base :: menu"></div>
+
+			<div class="d-flex flex-column" id="content-wrapper-danger">
+
+				<div id="masterRegistArea">
+					<div th:replace="base :: header"></div>
+					<hr>
+                <div id="content-wrapper-danger">
+                    <h3 class="text-black ml-2">マスタ登録</h3>
+					<div th:if="${status}=='emptyFile'"
+						class="alert alert-danger master-registration-error">
+						<span th:text="#{uploadFileSelect}"></span>
+					</div>
+					<div th:if="${status}=='notCSV'"
+						class="alert alert-danger master-registration-error">
+						<span th:text="${message} + #{uploadFileError}"></span>
+					</div>
+					<div th:if="${status}=='fileSizeExceed'"
+						class="alert alert-danger master-registration-error">
+						<span th:text="#{fileSizeExceed}"></span>
+					</div>
+					<div th:if="${error}=='directoryError'"
+						 class="alert alert-danger master-registration-error">
+						<span th:text="#{directoryError}"></span>
+					</div>
+					<div th:if="${error}=='uploadError'"
+						 class="alert alert-danger master-registration-error">
+						<span th:text="#{uploadError}"></span>
+					</div>
+					<div th:if="${error}=='empCreationError'"
+						 class="alert alert-danger master-registration-error">
+						<span th:text="${message} + #{didNotUploadYet}"></span>
+					</div>
+					<div th:if="${error}=='cardCreationError'"
+						 class="alert alert-danger master-registration-error">
+						<span th:text="${message} + #{didNotUploadYet}"></span>
+					</div>
+					<div th:if="${error}=='vpnCreationError'"
+						 class="alert alert-danger master-registration-error">
+						<span th:text="${message} + #{didNotUploadYet}"></span>
+					</div>
+					<div th:if="${error}=='masterCreateError'"
+						 class="alert alert-danger master-registration-error">
+						<span th:text="#{masterCreationError}"></span>
+					</div>
+					<div th:if="${error}=='empCsvError'"
+						 class="alert alert-danger master-registration-error">
+						<span th:text="#{empCsvError}"></span>
+					</div>
+					<div th:if="${error}=='cardCsvError'"
+						 class="alert alert-danger master-registration-error">
+						<span th:text="#{cardCsvError}"></span>
+					</div>
+					<div th:if="${error}=='vpnCsvError'"
+						 class="alert alert-danger master-registration-error">
+						<span th:text="#{vpnCsvError}"></span>
+					</div>
+					<div th:if="${status}=='uploadSuccess'"
+						class="alert alert-success master-registration-error">
+						<span th:text="${message} + #{uploadSuccess}"></span>
+					</div>
+					<div th:if="${empCreate}=='empCreationSuccess' OR ${cardCreate}=='cardCreationSuccess'"
+						 class="alert alert-success master-registration-error">
+						<span th:if="${empCreate}=='empCreationSuccess'" th:text="#{empCreationSuccess}"></span>
+						<br>
+						<span th:if="${cardCreate}=='cardCreationSuccess'" th:text="#{cardCreationSuccess}"></span>
+					</div>
+					<h5 class="text-black ml-3">〇マスタ取り込み</h5>
+					<div class="ml-5p">
+						<span class="text-nowrap text-black">　CSVファイルで作成した各種マスタを取り込んでください。事業企画の方は「社員情報」と「VPNドングル情報」を、
+							<br>課長以上の方は「カード所有情報」を取り込んでください
+						</span>
+					</div>
+					<div class="ml-5p"></div>
+                    <div class="masterUpload text-black ml-5p  mt-3"><label for="empMasterForm">・社員情報</label>
+                        <form id="empMasterForm" class="form-inline" th:action="@{/master-registration/employee}" method="post" enctype="multipart/form-data">
+                        	<div class="custom-file upload-text-area">
+							 	<input th:attrappend="disabled=${session.roles.contains(__#{businessPlanner}__)} ? '' : 'disabled'" type="file" class="custom-file-input upload-text-area" id="employeeFileName" name="employeeFileName" accept=".csv">
+							    <label class="custom-file-label" for="customFile">社員情報を選択して下さい</label>
+						  	</div>
+                            <span class="input-group-btn">
+                                <input th:attrappend="disabled=${session.roles.contains(__#{businessPlanner}__)} ? '' : 'disabled'" class="form-control-danger" type="submit" value="取込">
+                            </span>
+                        </form>
+                    </div>
+                    <div class="masterUpload text-black ml-5p mt-3"><label for="VPNMasterForm">・VPNドングル情報</label>
+                        <form id="VPNMasterForm" class="form-inline" th:action="@{/master-registration/dongle}" method="post" enctype="multipart/form-data">
+                            <div class="custom-file upload-text-area">
+							 	<input th:attrappend="disabled=${session.roles.contains(__#{businessPlanner}__)} ? '' : 'disabled'" type="file" class="custom-file-input upload-text-area" id="VPNFileName" name="VPNFileName" accept=".csv">
+							    <label class="custom-file-label" for="customFile">VPNドングル情報を選択して下さい</label>
+						  	</div>
+                            <span class="input-group-btn">
+                                <input th:attrappend="disabled=${session.roles.contains(__#{businessPlanner}__)} ? '' : 'disabled'" class=" form-control-danger" type="submit" value="取込">
+                            </span>
+                        </form>
+                    </div>
+                    <div class="masterUpload text-black ml-5p  mt-3"><label for="CardMasterForm">・カード所有情報</label>
+                        <form id="CardMasterForm" class="form-inline" th:action="@{/master-registration/card}" method="post" enctype="multipart/form-data">
+                        	<div class="custom-file upload-text-area">
+							 	<input th:attrappend="disabled=${session.roles.contains(__#{sectionManager}__)} ? '' : 'disabled'" type="file" class="custom-file-input upload-text-area" id="CardFileName" name="CardFileName" accept=".csv">
+							    <label class="custom-file-label" for="customFile">カード所有情報を選択して下さい</label>
+						  	</div>
+                            <span class="input-group-btn">
+                                <input th:attrappend="disabled=${session.roles.contains(__#{sectionManager}__)} ? '' : 'disabled'" class="form-control-danger" type="submit" value="取込">
+                           	</span>
+                        </form>
+                    </div>
+                    <hr>
+                    <h5 class="text-black ml-2">〇マスタ取り込み</h5>
+                    <div class="ml-5p"><span class="text-nowrap text-black">　全てのマスタの取り込みが完了したら以下のマスタ作成ボタンを押してください</span>
+                        <form th:action="@{/master-registration/create}" method="post">
+                            <input th:attrappend="disabled=${session.roles.contains(__#{businessPlanner}__)} ? '' : 'disabled'" class="btn btn-danger" type="submit" value="マスタ作成" />
+                       	</form>
+                    </div>
+                    <hr>
+				</div>
+
+			</div>
+		</div>
+		</div>
+
+	    <div th:replace="base :: footer"></div>
+	</body>
+
+</html>
