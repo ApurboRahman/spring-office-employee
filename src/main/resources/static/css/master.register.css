@@ -1,0 +1,55 @@
+a.acctext {
+	font-size: small;
+	color: black;
+}
+
+#TanaMenuBtn[aria-expanded=true]:after {
+	content: "-棚卸";
+}
+
+#TanaMenuBtn[aria-expanded=false]:after {
+	content: "+棚卸";
+}
+
+#KanriMenuBtn[aria-expanded=false]:after {
+	content: "+管理者";
+}
+
+#KanriMenuBtn[aria-expanded=true]:after {
+	content: "-管理者";
+}
+
+.deptName {
+	white-space: normal;
+}
+
+.pad01 {
+	padding-left: 1%;
+}
+
+.ml-5p {
+	margin-left: 5%;
+}
+
+.upload-text-area {
+	width: 558px !important;
+}
+
+.custom-file-label:after {
+	content: "参照" !important;
+	background-color: #dc3545 !important;
+	border-color: #dc3545;
+	color: #fff !important;
+}
+
+span.input-group-btn input {
+	margin-left: 3px;
+}
+
+.custom-file-label {
+	display: inline-block !important;
+}
+
+.master-registration-error {
+	margin: 0 .5rem;
+}

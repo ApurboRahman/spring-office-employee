@@ -10,6 +10,11 @@ public class Const {
 	public static final String LOGIN_URL ="/login";
 	public static final String LOGOUT_URL ="/logout";
 	public static final String INFORMATION_URL ="/information";
+	public static final String MASTER_REGISTRATION_URL ="/master-registration";
+	public static final String EMPLOYEE_UPLOAD_URL ="/employee";
+	public static final String CARD_UPLOAD_URL ="/card";
+	public static final String VPN_DONGLE_UPLOAD_URL ="/dongle";
+	public static final String CREATE ="/create";
 	public static final String LOGIN_ERROR ="/login-error";
 	public static final String ERROR_URL ="/error";
 
@@ -32,6 +37,7 @@ public class Const {
 	public static final String LOGIN = "login";
 	public static final String LOGOUT = "logout";
 	public static final String INFORMATION = "information";
+	public static final String MASTER_REGISTRATION = "master-register";
 	public static final String LAYOUT = "layout";
 
 	//System params variables name
@@ -40,6 +46,13 @@ public class Const {
 	public static String businessPlannerParamNm1 = "事業企画";
 	public static String sectionManagerParamCD1 = "050100";
 	public static String sectionManagerParamNm1 = "課長以上";
+
+	//CSV file name
+	public static String EMPLOYEE_CSV ="employee.csv";
+	public static String VPN_DONGLE_CSV ="dongle.csv";
+	public static String CARD_RETAIN_CSV ="cardRetain.csv";
+
+	public static long MAX_FILE_SIZE = 2000000;
 	public static enum EnumEnrollmentType{
 
 		INCUMBENT("在職"),
