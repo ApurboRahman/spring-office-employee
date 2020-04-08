@@ -53,6 +53,12 @@ public class Const {
 	public static String CARD_RETAIN_CSV ="cardRetain.csv";
 
 	public static long MAX_FILE_SIZE = 2000000;
+	public static String BACKUP_FOLDER_NAME = "bk";
+
+	//CSV File upload system parameter id
+	public static String CSV_UPLOAD_PARAMETER_ID = "60000";
+
+
 	public static enum EnumEnrollmentType{
 
 		INCUMBENT("在職"),
