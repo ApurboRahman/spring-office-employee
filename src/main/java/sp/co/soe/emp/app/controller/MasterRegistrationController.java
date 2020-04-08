@@ -22,28 +22,30 @@ public class MasterRegistrationController {
     }
 
     @GetMapping(value = "")
-    public String index(){
+    public String index() {
         return Const.MASTER_REGISTRATION;
     }
 
     @PostMapping(value = Const.EMPLOYEE_UPLOAD_URL)
-    public String uploadEmployeeInfo(Model model, HttpSession session, @RequestParam MultipartFile employeeFileName){
-        masterRegistrationService.uploadCSVFile(model,session,employeeFileName,Const.EMPLOYEE_CSV);
+    public String uploadEmployeeInfo(Model model, HttpSession session, @RequestParam MultipartFile employeeFileName) {
+        masterRegistrationService.uploadCSVFile(model, session, employeeFileName, Const.EMPLOYEE_CSV);
         return Const.MASTER_REGISTRATION;
     }
 
     @PostMapping(value = Const.VPN_DONGLE_UPLOAD_URL)
-    public String uploadDongleInfo(){
+    public String uploadDongleInfo(Model model, HttpSession session, @RequestParam MultipartFile VPNFileName) {
+        masterRegistrationService.uploadCSVFile(model, session, VPNFileName, Const.VPN_DONGLE_CSV);
         return Const.MASTER_REGISTRATION;
     }
 
     @PostMapping(value = Const.CARD_UPLOAD_URL)
-    public String uploadCardInfo(){
+    public String uploadCardInfo(Model model, HttpSession session, @RequestParam MultipartFile CardFileName) {
+        masterRegistrationService.uploadCSVFile(model, session, CardFileName, Const.CARD_RETAIN_CSV);
         return Const.MASTER_REGISTRATION;
     }
 
     @PostMapping(value = Const.CREATE)
-    public String crate(){
+    public String crate() {
         return Const.MASTER_REGISTRATION;
     }
 }
