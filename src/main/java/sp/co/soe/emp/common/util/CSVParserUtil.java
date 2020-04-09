@@ -1,11 +1,15 @@
 package sp.co.soe.emp.common.util;
 
+import com.opencsv.bean.CsvToBean;
+import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -63,6 +67,27 @@ public class CSVParserUtil {
         return true;
     }
 
+    public static <T> CsvToBean<T> csvToBean(Class<? extends T> clazz, String filePath, String fileName) {
+        Path path = Paths.get(filePath, fileName);
+
+        if (!fileExist(path)) {
+            log.warn(fileName + " does not exist in the file location");
+            return null;
+        }
+        try {
+            Reader reader = Files.newBufferedReader(path);
+            return new CsvToBeanBuilder<T>(reader)
+                    .withType(clazz)
+                    .withSkipLines(1)
+                    .withIgnoreLeadingWhiteSpace(true)
+                    .build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.warn(fileName + " could not be converted to bean");
+            return null;
+        }
+    }
+
     public static boolean createDirectory(String directoryPath) {
         File directory = new File(directoryPath);
         if (!directory.exists()) {
@@ -75,5 +100,9 @@ public class CSVParserUtil {
     public static boolean createBackupDirectory(String directoryPath) {
         String backupFolder = directoryPath + File.separator + Const.BACKUP_FOLDER_NAME;
         return createDirectory(backupFolder);
+    }
+
+    public static boolean fileExist(Path path){
+        return Files.exists(path);
     }
 }
