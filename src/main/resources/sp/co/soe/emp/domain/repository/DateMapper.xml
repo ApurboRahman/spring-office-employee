@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sp.co.soe.emp.domain.repository.DateMapper">
+
+	<!--
+	This method return current date in time stamp
+	-->
+	<select id="selectTimestamp" resultType="Date">
+		SELECT now()
+	</select>
+
+	<!--
+	This method First day of current month YYYY-MM-DD format
+	-->
+	<select id="selectFirstDayOfMonth" resultType="Date">
+		select cast(date_trunc('month', current_date) as date)
+	</select>
+
+	<!--
+	This method First day of previous month YYYY-MM-DD format
+	-->
+	<select id="selectFirstDayOfPreviousMonth" resultType="Date">
+		select cast(date_trunc('month', current_date) - interval '1 month' as date)
+	</select>
+
+</mapper>
