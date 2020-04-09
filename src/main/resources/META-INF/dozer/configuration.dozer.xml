@@ -3,6 +3,26 @@
     xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping
           https://dozermapper.github.io/schema/bean-mapping.xsd">
 
+    <configuration>
+        <date-format>yyyy/MM/DD</date-format>
+    </configuration>
+
+    <mapping>
+        <class-a>sp.co.soe.emp.domain.entity.EmployeesM</class-a>
+        <class-b>sp.co.soe.emp.app.bean.EmployeeInformationBean</class-b>
+        <field>
+            <a>joiningDate</a>
+            <b>joiningDate</b>
+        </field>
+        <field>
+            <a>retireDate</a>
+            <b>retireDate</b>
+        </field>
+    </mapping>
+    <mapping>
+        <class-a>sp.co.soe.emp.domain.entity.CardsRetain</class-a>
+        <class-b>sp.co.soe.emp.app.bean.CardInformationBean</class-b>
+    </mapping>
     <mapping>
       <class-a>sp.co.soe.emp.domain.entity.EmployeeInfo</class-a>
       <class-b>sp.co.soe.emp.app.bean.EmployeeInfoBean</class-b>

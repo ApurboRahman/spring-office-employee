@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sp.co.soe.emp.common.util.Const;
 import sp.co.soe.emp.domain.service.MasterRegistrationService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -45,7 +46,8 @@ public class MasterRegistrationController {
     }
 
     @PostMapping(value = Const.CREATE)
-    public String crate() {
+    public String crate(Model model, HttpSession session, HttpServletResponse response) {
+        masterRegistrationService.create(model, session, response);
         return Const.MASTER_REGISTRATION;
     }
 }
