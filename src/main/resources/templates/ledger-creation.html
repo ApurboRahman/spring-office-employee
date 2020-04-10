@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common/head :: head(title='Employee Inv | Master Registration')"></head>
+<body id="page-top">
+<div id="wrapper">
+    <div th:replace="base :: menu"></div>
+    <div class="d-flex flex-column" id="content-wrapper-danger">
+        <div th:replace="base :: header"></div>
+        <div id="CreateArea">
+            <div>
+                <div th:if="${status}=='success'"
+                     class="alert alert-success master-registration-error">
+                    <span th:text="#{ledgerCreationSuccess}"></span>
+                </div>
+                <div th:if="${status}=='error'"
+                     class="alert alert-danger master-registration-error">
+                    <span th:text=" #{ledgerCreationError}"></span>
+                </div>
+                <div th:if="${error}=='vpnCsvError'"
+                     class="alert alert-danger master-registration-error">
+                    <span th:text=" #{vpnCsvError}"></span>
+                </div>
+                <div th:if="${error}=='cardLedgerError'"
+                     class="alert alert-danger master-registration-error">
+                    <span th:text=" #{cardLedgerError}"></span>
+                </div>
+            </div>
+            <div>
+                <hr>
+                <h3 class="text-black ml-2">台帳作成</h3>
+                <div class="text-black MainArea">
+	                    	<span class="text-nowrap text-black">
+	                    		台帳を手動で作成したい場合は以下のボタンを押してください
+	                        </span>
+                    <form class="mt-2" th:action="@{/ledger/create}" method="post">
+                        <input class="btn btn-danger" type="submit" value="台帳作成" />
+                    </form>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="base :: footer"></div>
+</body>
+
+</html>
