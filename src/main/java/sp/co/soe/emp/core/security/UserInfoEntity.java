@@ -55,4 +55,8 @@ public class UserInfoEntity implements UserDetails {
     public boolean isEnabled() {
         return userAccount.getActive();
     }
+
+    public UsersAccount getUserAccount(){
+        return userAccount;
+    }
 }

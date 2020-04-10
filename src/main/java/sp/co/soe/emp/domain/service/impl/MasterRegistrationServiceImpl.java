@@ -13,12 +13,14 @@ import sp.co.soe.emp.common.util.Const;
 import sp.co.soe.emp.common.util.Messages;
 import sp.co.soe.emp.domain.entity.CardsRetain;
 import sp.co.soe.emp.domain.entity.CardsRetainKey;
-import sp.co.soe.emp.domain.entity.EmployeesM;
 import sp.co.soe.emp.domain.repository.CardsRetainMapper;
 import sp.co.soe.emp.domain.repository.DateMapper;
 import sp.co.soe.emp.domain.repository.EmployeesMMapper;
+import sp.co.soe.emp.domain.repository.UsersAccountMapper;
 import sp.co.soe.emp.domain.service.MasterRegistrationService;
 import sp.co.soe.emp.domain.service.SystemParamService;
+import sp.co.soe.emp.domain.service.transformer.EmployeeTransformer;
+import sp.co.soe.emp.domain.service.transformer.UserAccountTransformer;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,15 +33,23 @@ public class MasterRegistrationServiceImpl implements MasterRegistrationService 
 
     private final EmployeesMMapper employeesMMapper;
     private final CardsRetainMapper cardsRetainMapper;
+    private final UsersAccountMapper usersAccountMapper;
     private final SystemParamService systemParamService;
+    private final EmployeeTransformer employeeTransformer;
+    private final UserAccountTransformer userAccountTransformer;
     private final DateMapper dateMapper;
     private final Mapper dozerMapper;
 
     public MasterRegistrationServiceImpl(EmployeesMMapper employeesMMapper, CardsRetainMapper cardsRetainMapper,
-                                         SystemParamService systemParamService, DateMapper dateMapper, Mapper dozerMapper) {
+                                         UsersAccountMapper usersAccountMapper, SystemParamService systemParamService,
+                                         EmployeeTransformer employeeTransformer, UserAccountTransformer userAccountTransformer,
+                                         DateMapper dateMapper, Mapper dozerMapper) {
         this.employeesMMapper = employeesMMapper;
         this.cardsRetainMapper = cardsRetainMapper;
+        this.usersAccountMapper = usersAccountMapper;
         this.systemParamService = systemParamService;
+        this.employeeTransformer = employeeTransformer;
+        this.userAccountTransformer = userAccountTransformer;
         this.dateMapper = dateMapper;
         this.dozerMapper = dozerMapper;
     }
@@ -103,19 +113,8 @@ public class MasterRegistrationServiceImpl implements MasterRegistrationService 
             for (EmployeeInformationBean employee : csvToBean) {
                 if (!employee.getEmployeeId().isEmpty()) {
                     try {
-                        EmployeesM employeesM = new EmployeesM();
-
-                        employee.setCreateUser("SYSTEM");
-                        employee.setCreateDate(new Date());
-                        employee.setCreatePgid("SYSTEM");
-                        employee.setUpdateUser("SYSTEM");
-                        employee.setUpdateDate(new Date());
-                        employee.setUpdatePgid("SYSTEM");
-                        dozerMapper.map(employee, employeesM);
-                        employeesMMapper.deleteByPrimaryKey(employeesM.getEmployeeId());
-                        employeesMMapper.insert(employeesM);
-                        //// employeesMMapper.insertOrUpdate(employeeMasterTransformer.transform(employee));
-                        //  usersAccountMapper.insertOrUpdate(userAccountTransformer.transform(employee.getManNo()));
+                        employeesMMapper.insertOrUpdate(employeeTransformer.transform(employee));
+                        usersAccountMapper.insertOrUpdate(userAccountTransformer.transform(employee.getEmployeeId()));
                     } catch (Exception ex) {
                         log.error(ex.getMessage());
                         model.addAttribute("error", Messages.EMP_CSV_ERROR);

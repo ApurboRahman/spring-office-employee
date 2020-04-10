@@ -25,4 +25,11 @@
 		select cast(date_trunc('month', current_date) - interval '1 month' as date)
 	</select>
 
+	<!--
+	This method return Ninety Days From CurrentDate YYYY-MM-DD format
+	-->
+	<select id="selectNinetyDaysFromCurrentDate" resultType="Date">
+		SELECT cast(date_trunc('day', current_timestamp) + interval '90 day' as date);
+	</select>
+
 </mapper>

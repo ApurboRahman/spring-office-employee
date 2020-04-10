@@ -98,4 +98,6 @@ public interface EmployeesMMapper {
      * @mbg.generated Mon Mar 30 00:37:11 JST 2020
      */
     int updateByPrimaryKey(EmployeesM record);
+
+    int insertOrUpdate(EmployeesM record);
 }
