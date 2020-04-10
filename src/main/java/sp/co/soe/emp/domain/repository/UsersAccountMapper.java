@@ -77,4 +77,6 @@ public interface UsersAccountMapper {
 	 * @mbg.generated  Mon Mar 30 00:37:10 JST 2020
 	 */
 	int updateByPrimaryKey(UsersAccount record);
+
+	int insertOrUpdate(UsersAccount record);
 }
