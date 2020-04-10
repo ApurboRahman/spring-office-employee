@@ -16,6 +16,7 @@ public class Const {
 	public static final String CARD_UPLOAD_URL ="/card";
 	public static final String VPN_DONGLE_UPLOAD_URL ="/dongle";
 	public static final String CREATE ="/create";
+	public static final String LEDGER_CREATE_URL="/ledger";
 	public static final String LOGIN_ERROR ="/login-error";
 	public static final String ERROR_URL ="/error";
 
@@ -35,10 +36,12 @@ public class Const {
 	public static final String PASSWORD ="password";
 
 	//HTML page names
+	public static final String INIT_URL = "";
 	public static final String LOGIN = "login";
 	public static final String LOGOUT = "logout";
 	public static final String INFORMATION = "information";
 	public static final String MASTER_REGISTRATION = "master-register";
+	public static final String LEDGER_CREATE = "ledger-creation";
 	public static final String LAYOUT = "layout";
 
 	//System params variables name

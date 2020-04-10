@@ -1,0 +1,23 @@
+#TanaMenuBtn[aria-expanded=true]:after {
+    content: "-棚卸";
+}
+
+#TanaMenuBtn[aria-expanded=false]:after {
+    content: "+棚卸";
+}
+
+#KanriMenuBtn[aria-expanded=false]:after {
+    content: "+管理者";
+}
+
+#KanriMenuBtn[aria-expanded=true]:after {
+    content: "-管理者";
+}
+
+.MainArea {
+    margin-left: 5%;
+}
+
+.pad01 {
+    padding-left: 1%;
+}
