@@ -29,5 +29,11 @@ public interface DateMapper {
 	 * @return previous month
 	 */
 	Date selectFirstDayOfPreviousMonth();
+	/**
+	 * Ninety Days From CurrentDate YYYY-MM-DD format
+	 *
+	 * @return date
+	 */
+	Date selectNinetyDaysFromCurrentDate();
 
 }

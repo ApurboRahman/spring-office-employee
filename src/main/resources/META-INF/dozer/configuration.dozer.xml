@@ -27,5 +27,12 @@
       <class-a>sp.co.soe.emp.domain.entity.EmployeeInfo</class-a>
       <class-b>sp.co.soe.emp.app.bean.EmployeeInfoBean</class-b>
     </mapping>
-
+    <mapping>
+        <class-a>sp.co.soe.emp.domain.entity.UsersAccount</class-a>
+        <class-b>sp.co.soe.emp.app.bean.UserAccountBean</class-b>
+        <field>
+            <a>validateEndDate</a>
+            <b>validateEndDate</b>
+        </field>
+    </mapping>
 </mappings>

@@ -1,6 +1,7 @@
 package sp.co.soe.emp.common.util;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class Const {
@@ -54,10 +55,15 @@ public class Const {
 
 	public static long MAX_FILE_SIZE = 2000000;
 	public static String BACKUP_FOLDER_NAME = "bk";
+	public static Integer EMPLOYEE_ID_LENGTH = 6;
+	public static char LEADING_ZERO = '0';
+	public static String EMPTY_STRING = "";
+	public static Date EMPTY_DATE = null;
+	public static int ZERO = 0;
 
 	//CSV File upload system parameter id
 	public static String CSV_UPLOAD_PARAMETER_ID = "60000";
-
+	public static String PASSWORD_VALID_END_DATE = "9999/12/31";
 
 	public static enum EnumEnrollmentType{
 
