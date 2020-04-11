@@ -35,4 +35,16 @@
             <b>validateEndDate</b>
         </field>
     </mapping>
+    <mapping>
+        <class-a>sp.co.soe.emp.domain.entity.DonglesChk</class-a>
+        <class-b>sp.co.soe.emp.app.bean.DonglesChkBean</class-b>
+        <field>
+            <a>effectiveDate</a>
+            <b>effectiveDate</b>
+        </field>
+        <field>
+            <a>returnDate</a>
+            <b>returnDate</b>
+        </field>
+    </mapping>
 </mappings>
