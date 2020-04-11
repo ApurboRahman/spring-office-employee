@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sp.co.soe.emp.domain.repository.DonglesChkMapper">
+  <resultMap id="BaseResultMap" type="sp.co.soe.emp.domain.entity.DonglesChk">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <id column="period_month" jdbcType="DATE" property="periodMonth" />
+    <id column="employee_id" jdbcType="CHAR" property="employeeId" />
+    <id column="manage_num" jdbcType="VARCHAR" property="manageNum" />
+    <result column="effective_date" jdbcType="TIMESTAMP" property="effectiveDate" />
+    <result column="return_date" jdbcType="TIMESTAMP" property="returnDate" />
+    <result column="chk_user" jdbcType="VARCHAR" property="chkUser" />
+    <result column="chk_date" jdbcType="TIMESTAMP" property="chkDate" />
+    <result column="approval_user" jdbcType="VARCHAR" property="approvalUser" />
+    <result column="approval_date" jdbcType="TIMESTAMP" property="approvalDate" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+    <result column="chk_flg" jdbcType="CHAR" property="chkFlg" />
+    <result column="approval_flg" jdbcType="CHAR" property="approvalFlg" />
+    <result column="edit_flg" jdbcType="CHAR" property="editFlg" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_pgid" jdbcType="VARCHAR" property="createPgid" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="update_pgid" jdbcType="VARCHAR" property="updatePgid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    period_month, employee_id, manage_num, effective_date, return_date, chk_user, chk_date, 
+    approval_user, approval_date, notes, chk_flg, approval_flg, edit_flg, create_user, 
+    create_date, create_pgid, update_user, update_date, update_pgid
+  </sql>
+  <select id="selectByExample" parameterType="sp.co.soe.emp.domain.entity.DonglesChkExample" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dongles_chk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select 
+    <include refid="Base_Column_List" />
+    from dongles_chk
+    where period_month = #{periodMonth,jdbcType=DATE}
+      and employee_id = #{employeeId,jdbcType=CHAR}
+      and manage_num = #{manageNum,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from dongles_chk
+    where period_month = #{periodMonth,jdbcType=DATE}
+      and employee_id = #{employeeId,jdbcType=CHAR}
+      and manage_num = #{manageNum,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="sp.co.soe.emp.domain.entity.DonglesChkExample">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from dongles_chk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="sp.co.soe.emp.domain.entity.DonglesChk">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into dongles_chk (period_month, employee_id, manage_num, 
+      effective_date, return_date, chk_user, 
+      chk_date, approval_user, approval_date, 
+      notes, chk_flg, approval_flg, 
+      edit_flg, create_user, create_date, 
+      create_pgid, update_user, update_date, 
+      update_pgid)
+    values (#{periodMonth,jdbcType=DATE}, #{employeeId,jdbcType=CHAR}, #{manageNum,jdbcType=VARCHAR}, 
+      #{effectiveDate,jdbcType=TIMESTAMP}, #{returnDate,jdbcType=TIMESTAMP}, #{chkUser,jdbcType=VARCHAR}, 
+      #{chkDate,jdbcType=TIMESTAMP}, #{approvalUser,jdbcType=VARCHAR}, #{approvalDate,jdbcType=TIMESTAMP}, 
+      #{notes,jdbcType=VARCHAR}, #{chkFlg,jdbcType=CHAR}, #{approvalFlg,jdbcType=CHAR}, 
+      #{editFlg,jdbcType=CHAR}, #{createUser,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{createPgid,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{updatePgid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="sp.co.soe.emp.domain.entity.DonglesChk">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into dongles_chk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="periodMonth != null">
+        period_month,
+      </if>
+      <if test="employeeId != null">
+        employee_id,
+      </if>
+      <if test="manageNum != null">
+        manage_num,
+      </if>
+      <if test="effectiveDate != null">
+        effective_date,
+      </if>
+      <if test="returnDate != null">
+        return_date,
+      </if>
+      <if test="chkUser != null">
+        chk_user,
+      </if>
+      <if test="chkDate != null">
+        chk_date,
+      </if>
+      <if test="approvalUser != null">
+        approval_user,
+      </if>
+      <if test="approvalDate != null">
+        approval_date,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+      <if test="chkFlg != null">
+        chk_flg,
+      </if>
+      <if test="approvalFlg != null">
+        approval_flg,
+      </if>
+      <if test="editFlg != null">
+        edit_flg,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createPgid != null">
+        create_pgid,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="updatePgid != null">
+        update_pgid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="periodMonth != null">
+        #{periodMonth,jdbcType=DATE},
+      </if>
+      <if test="employeeId != null">
+        #{employeeId,jdbcType=CHAR},
+      </if>
+      <if test="manageNum != null">
+        #{manageNum,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDate != null">
+        #{effectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnDate != null">
+        #{returnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chkUser != null">
+        #{chkUser,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDate != null">
+        #{chkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalUser != null">
+        #{approvalUser,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalDate != null">
+        #{approvalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="chkFlg != null">
+        #{chkFlg,jdbcType=CHAR},
+      </if>
+      <if test="approvalFlg != null">
+        #{approvalFlg,jdbcType=CHAR},
+      </if>
+      <if test="editFlg != null">
+        #{editFlg,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createPgid != null">
+        #{createPgid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatePgid != null">
+        #{updatePgid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="sp.co.soe.emp.domain.entity.DonglesChkExample" resultType="java.lang.Long">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select count(*) from dongles_chk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update dongles_chk
+    <set>
+      <if test="record.periodMonth != null">
+        period_month = #{record.periodMonth,jdbcType=DATE},
+      </if>
+      <if test="record.employeeId != null">
+        employee_id = #{record.employeeId,jdbcType=CHAR},
+      </if>
+      <if test="record.manageNum != null">
+        manage_num = #{record.manageNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effectiveDate != null">
+        effective_date = #{record.effectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.returnDate != null">
+        return_date = #{record.returnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.chkUser != null">
+        chk_user = #{record.chkUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkDate != null">
+        chk_date = #{record.chkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.approvalUser != null">
+        approval_user = #{record.approvalUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approvalDate != null">
+        approval_date = #{record.approvalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chkFlg != null">
+        chk_flg = #{record.chkFlg,jdbcType=CHAR},
+      </if>
+      <if test="record.approvalFlg != null">
+        approval_flg = #{record.approvalFlg,jdbcType=CHAR},
+      </if>
+      <if test="record.editFlg != null">
+        edit_flg = #{record.editFlg,jdbcType=CHAR},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null">
+        create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createPgid != null">
+        create_pgid = #{record.createPgid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateUser != null">
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatePgid != null">
+        update_pgid = #{record.updatePgid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update dongles_chk
+    set period_month = #{record.periodMonth,jdbcType=DATE},
+      employee_id = #{record.employeeId,jdbcType=CHAR},
+      manage_num = #{record.manageNum,jdbcType=VARCHAR},
+      effective_date = #{record.effectiveDate,jdbcType=TIMESTAMP},
+      return_date = #{record.returnDate,jdbcType=TIMESTAMP},
+      chk_user = #{record.chkUser,jdbcType=VARCHAR},
+      chk_date = #{record.chkDate,jdbcType=TIMESTAMP},
+      approval_user = #{record.approvalUser,jdbcType=VARCHAR},
+      approval_date = #{record.approvalDate,jdbcType=TIMESTAMP},
+      notes = #{record.notes,jdbcType=VARCHAR},
+      chk_flg = #{record.chkFlg,jdbcType=CHAR},
+      approval_flg = #{record.approvalFlg,jdbcType=CHAR},
+      edit_flg = #{record.editFlg,jdbcType=CHAR},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=TIMESTAMP},
+      create_pgid = #{record.createPgid,jdbcType=VARCHAR},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      update_pgid = #{record.updatePgid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="sp.co.soe.emp.domain.entity.DonglesChk">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update dongles_chk
+    <set>
+      <if test="effectiveDate != null">
+        effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnDate != null">
+        return_date = #{returnDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="chkUser != null">
+        chk_user = #{chkUser,jdbcType=VARCHAR},
+      </if>
+      <if test="chkDate != null">
+        chk_date = #{chkDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approvalUser != null">
+        approval_user = #{approvalUser,jdbcType=VARCHAR},
+      </if>
+      <if test="approvalDate != null">
+        approval_date = #{approvalDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="chkFlg != null">
+        chk_flg = #{chkFlg,jdbcType=CHAR},
+      </if>
+      <if test="approvalFlg != null">
+        approval_flg = #{approvalFlg,jdbcType=CHAR},
+      </if>
+      <if test="editFlg != null">
+        edit_flg = #{editFlg,jdbcType=CHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createPgid != null">
+        create_pgid = #{createPgid,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatePgid != null">
+        update_pgid = #{updatePgid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where period_month = #{periodMonth,jdbcType=DATE}
+      and employee_id = #{employeeId,jdbcType=CHAR}
+      and manage_num = #{manageNum,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="sp.co.soe.emp.domain.entity.DonglesChk">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update dongles_chk
+    set effective_date = #{effectiveDate,jdbcType=TIMESTAMP},
+      return_date = #{returnDate,jdbcType=TIMESTAMP},
+      chk_user = #{chkUser,jdbcType=VARCHAR},
+      chk_date = #{chkDate,jdbcType=TIMESTAMP},
+      approval_user = #{approvalUser,jdbcType=VARCHAR},
+      approval_date = #{approvalDate,jdbcType=TIMESTAMP},
+      notes = #{notes,jdbcType=VARCHAR},
+      chk_flg = #{chkFlg,jdbcType=CHAR},
+      approval_flg = #{approvalFlg,jdbcType=CHAR},
+      edit_flg = #{editFlg,jdbcType=CHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_pgid = #{createPgid,jdbcType=VARCHAR},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      update_pgid = #{updatePgid,jdbcType=VARCHAR}
+    where period_month = #{periodMonth,jdbcType=DATE}
+      and employee_id = #{employeeId,jdbcType=CHAR}
+      and manage_num = #{manageNum,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByExampleWithLock" parameterType="sp.co.soe.emp.domain.entity.DonglesChkExample" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dongles_chk
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    for update
+  </select>
+  <select id="selectByPrimaryKeyWithLock" parameterType="map" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select 
+    <include refid="Base_Column_List" />
+    from dongles_chk
+    where period_month = #{periodMonth,jdbcType=DATE}
+      and employee_id = #{employeeId,jdbcType=CHAR}
+      and manage_num = #{manageNum,jdbcType=VARCHAR}
+    for update
+  </select>
+</mapper>
