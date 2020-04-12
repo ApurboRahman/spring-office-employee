@@ -2,10 +2,15 @@ package sp.co.soe.emp.domain.repository;
 
 import java.util.Date;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 import sp.co.soe.emp.domain.entity.CloseStatus;
 import sp.co.soe.emp.domain.entity.CloseStatusExample;
 
+@Component
+@Mapper
 public interface CloseStatusMapper {
 
     /**
