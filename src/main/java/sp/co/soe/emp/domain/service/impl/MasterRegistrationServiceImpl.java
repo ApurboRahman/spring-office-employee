@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import sp.co.soe.emp.app.bean.CardInformationBean;
+import sp.co.soe.emp.app.bean.CloseStatusBean;
 import sp.co.soe.emp.app.bean.EmployeeInformationBean;
+import sp.co.soe.emp.common.enums.StatusType;
 import sp.co.soe.emp.common.util.CSVParserUtil;
 import sp.co.soe.emp.common.util.Const;
 import sp.co.soe.emp.common.util.Messages;
@@ -18,14 +20,15 @@ import sp.co.soe.emp.domain.repository.DateMapper;
 import sp.co.soe.emp.domain.repository.EmployeesMMapper;
 import sp.co.soe.emp.domain.repository.UsersAccountMapper;
 import sp.co.soe.emp.domain.service.MasterRegistrationService;
+import sp.co.soe.emp.domain.service.StatusTypeService;
 import sp.co.soe.emp.domain.service.SystemParamService;
+import sp.co.soe.emp.domain.service.transformer.CardMasterTransformer;
 import sp.co.soe.emp.domain.service.transformer.EmployeeTransformer;
 import sp.co.soe.emp.domain.service.transformer.UserAccountTransformer;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.util.Date;
 
 @Service
 @Slf4j
@@ -37,21 +40,23 @@ public class MasterRegistrationServiceImpl implements MasterRegistrationService 
     private final SystemParamService systemParamService;
     private final EmployeeTransformer employeeTransformer;
     private final UserAccountTransformer userAccountTransformer;
+    private final CardMasterTransformer cardMasterTransformer;
+    private final StatusTypeService statusTypeService;
     private final DateMapper dateMapper;
-    private final Mapper dozerMapper;
 
     public MasterRegistrationServiceImpl(EmployeesMMapper employeesMMapper, CardsRetainMapper cardsRetainMapper,
                                          UsersAccountMapper usersAccountMapper, SystemParamService systemParamService,
                                          EmployeeTransformer employeeTransformer, UserAccountTransformer userAccountTransformer,
-                                         DateMapper dateMapper, Mapper dozerMapper) {
+                                         CardMasterTransformer cardMasterTransformer, StatusTypeService statusTypeService, DateMapper dateMapper, Mapper dozerMapper) {
         this.employeesMMapper = employeesMMapper;
         this.cardsRetainMapper = cardsRetainMapper;
         this.usersAccountMapper = usersAccountMapper;
         this.systemParamService = systemParamService;
         this.employeeTransformer = employeeTransformer;
         this.userAccountTransformer = userAccountTransformer;
+        this.cardMasterTransformer = cardMasterTransformer;
+        this.statusTypeService = statusTypeService;
         this.dateMapper = dateMapper;
-        this.dozerMapper = dozerMapper;
     }
 
     @Override
@@ -65,8 +70,14 @@ public class MasterRegistrationServiceImpl implements MasterRegistrationService 
         if (!checkUploadFile(model)) {
             return;
         }
-        createEmployeeMaster(model);
-        createCardMaster(model);
+        CloseStatusBean closeStatus = statusTypeService.getStatus(dateMapper.selectFirstDayOfPreviousMonth());
+        if (closeStatus == null || closeStatus.getCloseFlag().equals(StatusType.MONTHLY_CLOSING_DONE.getValue())) {
+            if (createEmployeeMaster(model) && createCardMaster(model)) {
+                updateCloseStatus();
+            }
+        }else {
+            model.addAttribute("error", Messages.MASTER_CREATE_ERROR);
+        }
     }
 
     private boolean uploadCSVFile(Model model, MultipartFile file, String fileName) {
@@ -135,21 +146,17 @@ public class MasterRegistrationServiceImpl implements MasterRegistrationService 
         CsvToBean<CardInformationBean> csvToBean = CSVParserUtil.csvToBean(CardInformationBean.class, getDirectoryPath(), Const.CARD_RETAIN_CSV);
         if (null != csvToBean) {
             for (CardInformationBean card : csvToBean) {
-
-                CardsRetainKey cardsRetainKey = new CardsRetain();
-                CardsRetain cardsRetain = new CardsRetain();
-                card.setPeriodMonth(dateMapper.selectFirstDayOfMonth());
-                card.setCreateUser("SYSTEM");
-                card.setCreateDate(new Date());
-                card.setCreatePgid("SYSTEM");
-                card.setUpdateUser("SYSTEM");
-                card.setUpdateDate(new Date());
-                card.setUpdatePgid("SYSTEM");
-                dozerMapper.map(card, cardsRetain);
-                cardsRetainKey.setEmployeeId(cardsRetain.getEmployeeId());
-                cardsRetainKey.setPeriodMonth(cardsRetain.getPeriodMonth());
-                cardsRetainMapper.deleteByPrimaryKey(cardsRetainKey);
-                cardsRetainMapper.insert(cardsRetain);
+                if (card.getEmployeeId().isEmpty()) {
+                    try {
+                        CardsRetain cardsRetain = cardMasterTransformer.transform(card);
+                        cardsRetainMapper.deleteByPrimaryKey(getCardsRetainKey(card.getEmployeeId()));
+                        cardsRetainMapper.insert(cardsRetain);
+                    } catch (Exception ex) {
+                        log.error(ex.getMessage());
+                        model.addAttribute("error", Messages.CARD_CSV_ERROR);
+                        return false;
+                    }
+                }
             }
             model.addAttribute("cardCreate", Messages.CARD_MASTER_CREATE);
             return true;
@@ -175,5 +182,20 @@ public class MasterRegistrationServiceImpl implements MasterRegistrationService 
             }
         }
         return true;
+    }
+
+    private void updateCloseStatus() {
+        statusTypeService.deleteStatus(dateMapper.selectFirstDayOfMonth());
+        CloseStatusBean closeStatusBean = new CloseStatusBean();
+        closeStatusBean.setCloseDate(dateMapper.selectFirstDayOfMonth());
+        closeStatusBean.setCloseFlag(StatusType.REGISTERED_TO_MASTER.getValue());
+        statusTypeService.insertStatus(closeStatusBean);
+
+    }
+    private CardsRetainKey getCardsRetainKey(String employeeId) {
+        CardsRetainKey cardsRetainKey = new CardsRetainKey();
+        cardsRetainKey.setEmployeeId(employeeId);
+        cardsRetainKey.setPeriodMonth(dateMapper.selectFirstDayOfMonth());
+        return cardsRetainKey;
     }
 }
