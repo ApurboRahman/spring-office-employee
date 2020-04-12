@@ -100,4 +100,11 @@ public interface EmployeesMMapper {
     int updateByPrimaryKey(EmployeesM record);
 
     int insertOrUpdate(EmployeesM record);
+
+    /**
+     * This method return list of manno of all employees
+     *
+     * @return
+     */
+    List<String> getAllEmployeesId();
 }

@@ -43,4 +43,11 @@ public class StatusTypeServiceImpl implements StatusTypeService {
     public int deleteStatus(Date closeDate) {
         return closeStatusMapper.deleteByPrimaryKey(closeDate);
     }
+
+    @Override
+    public int updateStatus(CloseStatusBean closeStatusBean) {
+        CloseStatus closeStatus = new CloseStatus();
+        dozerMapper.map(closeStatusBean, closeStatus);
+        return closeStatusMapper.updateByPrimaryKey(closeStatus);
+    }
 }

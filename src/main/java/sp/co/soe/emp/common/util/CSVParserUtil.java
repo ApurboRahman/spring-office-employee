@@ -102,7 +102,54 @@ public class CSVParserUtil {
         return createDirectory(backupFolder);
     }
 
-    public static boolean fileExist(Path path){
+    public static boolean fileExist(Path path) {
         return Files.exists(path);
     }
+
+    /**
+     * Rename csv file and save it in the backup folder
+     *
+     * @param directoryPath
+     * @return true if file rename and save success false otherwise
+     */
+    public static boolean renameCSVFilesAndSaveInBackupFolder(String directoryPath) {
+        File[] files = new File(directoryPath).listFiles();
+        if (null != files) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().endsWith(".csv")) {
+                    try {
+                        Path oldFilePath = Paths.get(directoryPath + File.separator + file.getName());
+                        Path path = Paths.get(renameCSVFile(directoryPath, file.getName()));
+                        Files.write(path, Files.readAllBytes(oldFilePath));
+                        if(file.delete()){
+                            log.warn(file.getName() + "is deleted from the folder.");
+                        }else {
+                            log.warn(file.getName() + "could not deleted from the folder.");
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        log.warn(file.getName() + " could not be renamed and uploaded in bk folder.");
+                        return false;
+                    }
+                }
+            }
+            log.info("file is renamed and uploaded in bk folder.");
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Rename csv file. adding YYYYMMDD with the file name
+     *
+     * @param directoryPath
+     * @param fileName
+     * @return new name of the csv file
+     */
+    public static String renameCSVFile(String directoryPath, String fileName) {
+        String datePart = DateUtil.getCurrentMonth().replace("-", "");
+        fileName = fileName.replace(".csv", ("_").concat(datePart.concat(".csv")));
+        return directoryPath + File.separator + Const.BACKUP_FOLDER_NAME + File.separator + fileName;
+    }
+
 }

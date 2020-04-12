@@ -563,4 +563,11 @@
     update_date = #{updateDate,jdbcType=TIMESTAMP},
     update_pgid = #{updatePgid,jdbcType=VARCHAR}
   </insert>
+
+  <!--
+ This method return list of manno of all employees
+ -->
+  <select id="getAllEmployeesId" resultType="java.lang.String">
+    SELECT employee_id FROM employees_m
+  </select>
 </mapper>
