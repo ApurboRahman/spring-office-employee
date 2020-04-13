@@ -4,8 +4,10 @@ import com.opencsv.bean.CsvToBean;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import sp.co.soe.emp.app.bean.CardsChkBean;
 import sp.co.soe.emp.app.bean.CloseStatusBean;
 import sp.co.soe.emp.app.bean.DonglesChkBean;
+import sp.co.soe.emp.common.enums.Screen;
 import sp.co.soe.emp.common.enums.StatusType;
 import sp.co.soe.emp.common.util.CSVParserUtil;
 import sp.co.soe.emp.common.util.Const;
@@ -71,6 +73,8 @@ public class LedgerServiceImpl implements LedgerService {
             for (DonglesChkBean dongle : chkBeans) {
                 if (!dongle.getEmployeeId().isEmpty() || dongle.getEmployeeId() != null) {
                     try {
+                        dongle.setCreatePgid(Screen.LEDGER_CREATION.getScreenId());
+                        dongle.setUpdatePgid(Screen.LEDGER_CREATION.getScreenId());
                         DonglesChk chk = dongleChkTransformer.transform(dongle);
                         donglesChkMapper.deleteByPrimaryKey(chk.getPeriodMonth(), chk.getEmployeeId(), chk.getManageNum());
                         donglesChkMapper.insert(chk);
@@ -90,8 +94,12 @@ public class LedgerServiceImpl implements LedgerService {
         if (null != employeeList) {
             for (String employee : employeeList) {
                 try {
+                    CardsChkBean cardBean = new CardsChkBean();
+                    cardBean.setEmployeeId(employee);
+                    cardBean.setCreatePgid(Screen.LEDGER_CREATION.getScreenId());
+                    cardBean.setUpdatePgid(Screen.LEDGER_CREATION.getScreenId());
                     cardsChkMapper.deleteByPrimaryKey(dateMapper.selectFirstDayOfMonth(), employee);
-                    cardsChkMapper.insert(cardLedgerTransformer.transform(employee));
+                    cardsChkMapper.insert(cardLedgerTransformer.transform(cardBean));
                 } catch (Exception ex) {
                     log.error(ex.getMessage());
                     model.addAttribute("error", Messages.CARD_LEDGER_ERROR);
@@ -106,7 +114,7 @@ public class LedgerServiceImpl implements LedgerService {
     private boolean updateCloseStatus(CloseStatusBean closeStatus) {
         closeStatus.setCloseDate(dateMapper.selectFirstDayOfMonth());
         closeStatus.setCloseFlag(StatusType.LEDGER_CREATED.getValue());
-        closeStatus.setUpdatePgid("SYSTEM");
+        closeStatus.setUpdatePgid(Screen.LEDGER_CREATION.getScreenId());
         int result = statusTypeService.updateStatus(closeStatus);
         return result != 0;
     }

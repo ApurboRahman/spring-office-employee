@@ -17,4 +17,6 @@ public interface Transformer<S, T> {
      * @return
      */
     S transformBack(T target);
+
+    T transformForUpdate(S source);
 }

@@ -32,16 +32,19 @@ public class DongleChkTransformer implements Transformer<DonglesChkBean, Dongles
         source.setChkDate(Const.EMPTY_DATE);
         source.setCreateUser(loginUser);
         source.setCreateDate(dateMapper.selectTimestamp());
-        source.setCreatePgid("SYSTEM");
         source.setUpdateUser(loginUser);
         source.setUpdateDate(dateMapper.selectTimestamp());
-        source.setUpdatePgid("SYSTEM");
         dozerMapper.map(source,donglesChk);
         return donglesChk;
     }
 
     @Override
     public DonglesChkBean transformBack(DonglesChk target) {
+        return null;
+    }
+
+    @Override
+    public DonglesChk transformForUpdate(DonglesChkBean source) {
         return null;
     }
 
