@@ -14,7 +14,7 @@ import sp.co.soe.emp.domain.repository.DateMapper;
 import java.util.Date;
 
 @Component
-public class UserAccountTransformer implements Transformer<String, UsersAccount> {
+public class UserAccountTransformer implements Transformer<UserAccountBean, UsersAccount> {
 
     private final PasswordEncoder passwordEncoder;
     private final DateMapper dateMapper;
@@ -34,13 +34,13 @@ public class UserAccountTransformer implements Transformer<String, UsersAccount>
      * @return
      */
     @Override
-    public UsersAccount transform(String source) {
+    public UsersAccount transform(UserAccountBean source) {
         String loginUser = UserInfoHelper.getLoginUserInfo().getUserName();
-        String userName = UserInfoHelper.generateEmployeeId(source);
+        String userName = UserInfoHelper.generateEmployeeId(source.getUserName());
         UserAccountBean bean = new UserAccountBean();
         UsersAccount usersAccount = new UsersAccount();
         bean.setUserName(userName);
-        bean.setPassword(getEncryptedPassword(source));
+        bean.setPassword(getEncryptedPassword(source.getUserName()));
         bean.setValidateStartDate(dateMapper.selectTimestamp());
         bean.setValidateEndDate(getValidExpireDate());
         bean.setActive(true);
@@ -48,10 +48,8 @@ public class UserAccountTransformer implements Transformer<String, UsersAccount>
         bean.setPwdChangeDate(dateMapper.selectTimestamp());
         bean.setCreateUser(loginUser);
         bean.setCreateDate(dateMapper.selectTimestamp());
-        bean.setCreatePgid("SYSTEM");
         bean.setUpdateUser(loginUser);
         bean.setUpdateDate(dateMapper.selectTimestamp());
-        bean.setUpdatePgid("SYSTEM");
         dozerMapper.map(bean,usersAccount);
         return usersAccount;
     }
@@ -63,7 +61,12 @@ public class UserAccountTransformer implements Transformer<String, UsersAccount>
      * @return
      */
     @Override
-    public String transformBack(UsersAccount target) {
+    public UserAccountBean transformBack(UsersAccount target) {
+        return null;
+    }
+
+    @Override
+    public UsersAccount transformForUpdate(UserAccountBean source) {
         return null;
     }
 
