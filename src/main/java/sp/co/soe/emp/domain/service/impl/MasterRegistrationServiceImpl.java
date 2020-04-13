@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 import sp.co.soe.emp.app.bean.CardInformationBean;
 import sp.co.soe.emp.app.bean.CloseStatusBean;
 import sp.co.soe.emp.app.bean.EmployeeInformationBean;
+import sp.co.soe.emp.app.bean.UserAccountBean;
+import sp.co.soe.emp.common.enums.Screen;
 import sp.co.soe.emp.common.enums.StatusType;
 import sp.co.soe.emp.common.util.CSVParserUtil;
 import sp.co.soe.emp.common.util.Const;
@@ -73,9 +75,9 @@ public class MasterRegistrationServiceImpl implements MasterRegistrationService 
         CloseStatusBean closeStatus = statusTypeService.getStatus(dateMapper.selectFirstDayOfPreviousMonth());
         if (closeStatus == null || closeStatus.getCloseFlag().equals(StatusType.MONTHLY_CLOSING_DONE.getValue())) {
             if (createEmployeeMaster(model) && createCardMaster(model)) {
-                updateCloseStatus();
+                insertCloseStatus();
             }
-        }else {
+        } else {
             model.addAttribute("error", Messages.MASTER_CREATE_ERROR);
         }
     }
@@ -120,51 +122,57 @@ public class MasterRegistrationServiceImpl implements MasterRegistrationService 
     private boolean createEmployeeMaster(Model model) {
         CsvToBean<EmployeeInformationBean> csvToBean = CSVParserUtil.csvToBean(EmployeeInformationBean.class, getDirectoryPath(), Const.EMPLOYEE_CSV);
 
-        if (null != csvToBean) {
-            for (EmployeeInformationBean employee : csvToBean) {
-                if (!employee.getEmployeeId().isEmpty()) {
-                    try {
-                        employeesMMapper.insertOrUpdate(employeeTransformer.transform(employee));
-                        usersAccountMapper.insertOrUpdate(userAccountTransformer.transform(employee.getEmployeeId()));
-                    } catch (Exception ex) {
-                        log.error(ex.getMessage());
-                        model.addAttribute("error", Messages.EMP_CSV_ERROR);
-                        return false;
-                    }
-                }
-            }
-            model.addAttribute("empCreate", Messages.EMP_MASTER_CREATE);
-            return true;
-        } else {
+        if (null == csvToBean) {
             model.addAttribute("message", Const.EMPLOYEE_CSV);
             model.addAttribute("error", Messages.EMP_MASTER_ERROR);
             return false;
         }
+        for (EmployeeInformationBean employee : csvToBean) {
+            if (!employee.getEmployeeId().isEmpty()) {
+                try {
+                    employee.setCreatePgid(Screen.MASTER_REGISTRATION.getScreenId());
+                    employee.setUpdatePgid(Screen.MASTER_REGISTRATION.getScreenId());
+                    employeesMMapper.insertOrUpdate(employeeTransformer.transform(employee));
+                    UserAccountBean userBean = new UserAccountBean();
+                    userBean.setUserName(employee.getEmployeeId());
+                    userBean.setCreatePgid(Screen.MASTER_REGISTRATION.getScreenId());
+                    userBean.setUpdatePgid(Screen.MASTER_REGISTRATION.getScreenId());
+                    usersAccountMapper.insertOrUpdate(userAccountTransformer.transform(userBean));
+                } catch (Exception ex) {
+                    log.error(ex.getMessage());
+                    model.addAttribute("error", Messages.EMP_CSV_ERROR);
+                    return false;
+                }
+            }
+        }
+        model.addAttribute("empCreate", Messages.EMP_MASTER_CREATE);
+        return true;
     }
 
     private boolean createCardMaster(Model model) {
         CsvToBean<CardInformationBean> csvToBean = CSVParserUtil.csvToBean(CardInformationBean.class, getDirectoryPath(), Const.CARD_RETAIN_CSV);
-        if (null != csvToBean) {
-            for (CardInformationBean card : csvToBean) {
-                if (card.getEmployeeId().isEmpty()) {
-                    try {
-                        CardsRetain cardsRetain = cardMasterTransformer.transform(card);
-                        cardsRetainMapper.deleteByPrimaryKey(getCardsRetainKey(card.getEmployeeId()));
-                        cardsRetainMapper.insert(cardsRetain);
-                    } catch (Exception ex) {
-                        log.error(ex.getMessage());
-                        model.addAttribute("error", Messages.CARD_CSV_ERROR);
-                        return false;
-                    }
-                }
-            }
-            model.addAttribute("cardCreate", Messages.CARD_MASTER_CREATE);
-            return true;
-        } else {
+        if (null == csvToBean) {
             model.addAttribute("message", Const.CARD_RETAIN_CSV);
             model.addAttribute("error", Messages.CARD_MASTER_ERROR);
             return false;
         }
+        for (CardInformationBean card : csvToBean) {
+            if (card.getEmployeeId().isEmpty()) {
+                try {
+                    card.setCreatePgid(Screen.MASTER_REGISTRATION.getScreenId());
+                    card.setUpdatePgid(Screen.MASTER_REGISTRATION.getScreenId());
+                    CardsRetain cardsRetain = cardMasterTransformer.transform(card);
+                    cardsRetainMapper.deleteByPrimaryKey(getCardsRetainKey(card.getEmployeeId()));
+                    cardsRetainMapper.insert(cardsRetain);
+                } catch (Exception ex) {
+                    log.error(ex.getMessage());
+                    model.addAttribute("error", Messages.CARD_CSV_ERROR);
+                    return false;
+                }
+            }
+        }
+        model.addAttribute("cardCreate", Messages.CARD_MASTER_CREATE);
+        return true;
     }
 
     private String getDirectoryPath() {
@@ -184,14 +192,17 @@ public class MasterRegistrationServiceImpl implements MasterRegistrationService 
         return true;
     }
 
-    private void updateCloseStatus() {
+    private void insertCloseStatus() {
         statusTypeService.deleteStatus(dateMapper.selectFirstDayOfMonth());
         CloseStatusBean closeStatusBean = new CloseStatusBean();
         closeStatusBean.setCloseDate(dateMapper.selectFirstDayOfMonth());
         closeStatusBean.setCloseFlag(StatusType.REGISTERED_TO_MASTER.getValue());
+        closeStatusBean.setCreatePgid(Screen.MASTER_REGISTRATION.getScreenId());
+        closeStatusBean.setUpdatePgid(Screen.MASTER_REGISTRATION.getScreenId());
         statusTypeService.insertStatus(closeStatusBean);
 
     }
+
     private CardsRetainKey getCardsRetainKey(String employeeId) {
         CardsRetainKey cardsRetainKey = new CardsRetainKey();
         cardsRetainKey.setEmployeeId(employeeId);

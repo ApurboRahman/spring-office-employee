@@ -25,16 +25,19 @@ public class CardMasterTransformer implements Transformer<CardInformationBean, C
         source.setPeriodMonth(dateMapper.selectFirstDayOfMonth());
         source.setCreateUser(loginUser);
         source.setCreateDate(dateMapper.selectTimestamp());
-        source.setCreatePgid("SYSTEM");
         source.setUpdateUser(loginUser);
         source.setUpdateDate(dateMapper.selectTimestamp());
-        source.setUpdatePgid("SYSTEM");
         dozerMapper.map(source, cardsRetain);
         return cardsRetain;
     }
 
     @Override
     public CardInformationBean transformBack(CardsRetain target) {
+        return null;
+    }
+
+    @Override
+    public CardsRetain transformForUpdate(CardInformationBean source) {
         return null;
     }
 }

@@ -46,8 +46,7 @@ public class StatusTypeServiceImpl implements StatusTypeService {
 
     @Override
     public int updateStatus(CloseStatusBean closeStatusBean) {
-        CloseStatus closeStatus = new CloseStatus();
-        dozerMapper.map(closeStatusBean, closeStatus);
+        CloseStatus closeStatus = statusTypeTransformer.transformForUpdate(closeStatusBean);
         return closeStatusMapper.updateByPrimaryKey(closeStatus);
     }
 }

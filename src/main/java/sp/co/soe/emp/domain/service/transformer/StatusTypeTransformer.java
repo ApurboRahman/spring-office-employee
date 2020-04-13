@@ -24,10 +24,8 @@ public class StatusTypeTransformer implements Transformer<CloseStatusBean, Close
         CloseStatus closeStatus = new CloseStatus();
         source.setCreateUser(loginUser);
         source.setCreateDate(dateMapper.selectTimestamp());
-        source.setCreatePgid("SYSTEM");
         source.setUpdateUser(loginUser);
         source.setUpdateDate(dateMapper.selectTimestamp());
-        source.setUpdatePgid("SYSTEM");
         dozerMapper.map(source,closeStatus);
         return closeStatus;
     }
@@ -35,5 +33,15 @@ public class StatusTypeTransformer implements Transformer<CloseStatusBean, Close
     @Override
     public CloseStatusBean transformBack(CloseStatus target) {
         return null;
+    }
+
+    @Override
+    public CloseStatus transformForUpdate(CloseStatusBean source) {
+        String loginUser = UserInfoHelper.getLoginUserInfo().getUserName();
+        CloseStatus closeStatus = new CloseStatus();
+        source.setUpdateUser(loginUser);
+        source.setUpdateDate(dateMapper.selectTimestamp());
+        dozerMapper.map(source,closeStatus);
+        return closeStatus;
     }
 }

@@ -11,7 +11,7 @@ import sp.co.soe.emp.domain.repository.CardsChkMapper;
 import sp.co.soe.emp.domain.repository.DateMapper;
 
 @Component
-public class CardLedgerTransformer implements Transformer<String, CardsChk> {
+public class CardLedgerTransformer implements Transformer<CardsChkBean, CardsChk> {
     private final CardsChkMapper cardsChkMapper;
     private final DateMapper dateMapper;
     private final Mapper dozerMapper;
@@ -23,47 +23,49 @@ public class CardLedgerTransformer implements Transformer<String, CardsChk> {
     }
 
     @Override
-    public CardsChk transform(String employeeId) {
+    public CardsChk transform(CardsChkBean source) {
         CardsChk cardsChk = new CardsChk();
-        CardsChkBean cardBean = new CardsChkBean();
+
         String loginUser = UserInfoHelper.getLoginUserInfo().getUserName();
-        CardsChk getPreviousMonthInfo = cardsChkMapper.selectByPrimaryKey(dateMapper.selectFirstDayOfPreviousMonth(),employeeId);
-        cardBean.setEmployeeId(employeeId);
-        cardBean.setPeriodMonth(dateMapper.selectFirstDayOfMonth());
-        cardBean.setCard1Flg(Const.EMPTY_STRING);
-        cardBean.setCard2Flg(Const.EMPTY_STRING);
-        cardBean.setCard3Flg(Const.EMPTY_STRING);
-        cardBean.setCard4Flg(Const.EMPTY_STRING);
-        cardBean.setCard5Flg(Const.EMPTY_STRING);
-        cardBean.setCard6Flg(Const.EMPTY_STRING);
-        cardBean.setCard7Flg(Const.EMPTY_STRING);
-        cardBean.setChkDate(Const.EMPTY_DATE);
-        cardBean.setChkFlg(Const.EMPTY_STRING);
-        cardBean.setApprovalDate(Const.EMPTY_DATE);
-        cardBean.setApprovalFlg(Const.EMPTY_STRING);
-        cardBean.setApprovalUser(Const.EMPTY_STRING);
-        cardBean.setEmpcardFlg(Const.EMPTY_STRING);
-        cardBean.setEditFlg(Const.EMPTY_STRING);
-        cardBean.setNotes(Const.EMPTY_STRING);
-        cardBean.setCreateDate(dateMapper.selectTimestamp());
-        cardBean.setCreateUser(loginUser);
-        cardBean.setUpdateUser(loginUser);
-        cardBean.setUpdateDate(dateMapper.selectTimestamp());
-        cardBean.setCreatePgid("SYSTEM");
-        cardBean.setUpdatePgid("SYSTEM");
+        CardsChk getPreviousMonthInfo = cardsChkMapper.selectByPrimaryKey(dateMapper.selectFirstDayOfPreviousMonth(),source.getEmployeeId());
+        source.setPeriodMonth(dateMapper.selectFirstDayOfMonth());
+        source.setCard1Flg(Const.EMPTY_STRING);
+        source.setCard2Flg(Const.EMPTY_STRING);
+        source.setCard3Flg(Const.EMPTY_STRING);
+        source.setCard4Flg(Const.EMPTY_STRING);
+        source.setCard5Flg(Const.EMPTY_STRING);
+        source.setCard6Flg(Const.EMPTY_STRING);
+        source.setCard7Flg(Const.EMPTY_STRING);
+        source.setChkDate(Const.EMPTY_DATE);
+        source.setChkFlg(Const.EMPTY_STRING);
+        source.setApprovalDate(Const.EMPTY_DATE);
+        source.setApprovalFlg(Const.EMPTY_STRING);
+        source.setApprovalUser(Const.EMPTY_STRING);
+        source.setEmpcardFlg(Const.EMPTY_STRING);
+        source.setEditFlg(Const.EMPTY_STRING);
+        source.setNotes(Const.EMPTY_STRING);
+        source.setCreateDate(dateMapper.selectTimestamp());
+        source.setCreateUser(loginUser);
+        source.setUpdateUser(loginUser);
+        source.setUpdateDate(dateMapper.selectTimestamp());
         if (getPreviousMonthInfo != null) {
-            cardBean.setWorkNm(getPreviousMonthInfo.getWorkNm());
-            cardBean.setPlaceNm(getPreviousMonthInfo.getPlaceNm());
+            source.setWorkNm(getPreviousMonthInfo.getWorkNm());
+            source.setPlaceNm(getPreviousMonthInfo.getPlaceNm());
         } else {
-            cardBean.setWorkNm(Const.EMPTY_STRING);
-            cardBean.setPlaceNm(Const.EMPTY_STRING);
+            source.setWorkNm(Const.EMPTY_STRING);
+            source.setPlaceNm(Const.EMPTY_STRING);
         }
-        dozerMapper.map(cardBean, cardsChk);
+        dozerMapper.map(source, cardsChk);
         return cardsChk;
     }
 
     @Override
-    public String transformBack(CardsChk target) {
+    public CardsChkBean transformBack(CardsChk target) {
+        return null;
+    }
+
+    @Override
+    public CardsChk transformForUpdate(CardsChkBean source) {
         return null;
     }
 }

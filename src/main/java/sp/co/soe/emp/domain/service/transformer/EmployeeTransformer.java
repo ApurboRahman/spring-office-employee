@@ -33,10 +33,8 @@ public class EmployeeTransformer implements Transformer<EmployeeInformationBean,
         source.setCommCode(false);
         source.setCreateUser(loginUser);
         source.setCreateDate(dateMapper.selectTimestamp());
-        source.setCreatePgid("SYSTEM");
         source.setUpdateUser(loginUser);
         source.setUpdateDate(dateMapper.selectTimestamp());
-        source.setUpdatePgid("SYSTEM");
         dozerMapper.map(source, employeesM);
         return employeesM;
     }
@@ -49,6 +47,11 @@ public class EmployeeTransformer implements Transformer<EmployeeInformationBean,
      */
     @Override
     public EmployeeInformationBean transformBack(EmployeesM target) {
+        return null;
+    }
+
+    @Override
+    public EmployeesM transformForUpdate(EmployeeInformationBean source) {
         return null;
     }
 }
