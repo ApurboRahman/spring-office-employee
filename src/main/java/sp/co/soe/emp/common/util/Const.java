@@ -19,6 +19,7 @@ public class Const {
 	public static final String LEDGER_CREATE_URL="/ledger";
 	public static final String LOGIN_ERROR ="/login-error";
 	public static final String ERROR_URL ="/error";
+	public static final String REDIRECT_TO_INFORMATION ="redirect:/information";
 
 	//static folders location
 	public static final String CSS = "/css/**";

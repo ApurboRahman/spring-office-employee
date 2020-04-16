@@ -16,7 +16,9 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = {UserNameValidator.class})
 public @interface UserName {
 
-    String message() default "{jp.co.nttdmse.common.validation.annotation.ManNo.message}";
+    String message() default "{sp.co.soe.emp.common.validation.annotation.EmployeeId.message}";
+
+    String numeric() default "{sp.co.soe.emp.common.validation.annotation.EmployeeId.numericString}";
 
     Class<?>[] groups() default {};
 
