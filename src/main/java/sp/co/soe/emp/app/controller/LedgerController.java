@@ -5,7 +5,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import sp.co.soe.emp.common.enums.MenuType;
 import sp.co.soe.emp.common.util.Const;
+import sp.co.soe.emp.core.aspect.AccessControl;
 import sp.co.soe.emp.domain.service.LedgerService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,11 +23,13 @@ public class LedgerController {
     }
 
     @GetMapping(value = Const.INIT_URL)
+    @AccessControl(MenuType.LEDGER_CREATION)
     public String index(Model model){
         return Const.LEDGER_CREATE;
     }
 
     @PostMapping(value = Const.CREATE)
+    @AccessControl(MenuType.LEDGER_CREATION)
     public String create(Model model, HttpSession session, HttpServletResponse response){
         ledgerService.create(model,session,response);
         return Const.LEDGER_CREATE;
