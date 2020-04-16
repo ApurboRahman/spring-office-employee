@@ -11,7 +11,7 @@
 			    <hr class="info-separator">
 			    <div class="border rounded border-danger mx-auto InfoArea" id="InformationArea">
 			        <h5 class="informationArea text-white">お知らせ</h5>
-			        <div class="border-danger"><span class="text-black"></span></div>
+			        <div class="border-danger"><span class="text-black" th:text="${message}"><br></span></div>
 			    </div>
 			    <hr class="info-separator">
 			    <div th:if="${messageShow}" class="border rounded border-danger mx-auto InfoArea" id="ImplStatusArea">

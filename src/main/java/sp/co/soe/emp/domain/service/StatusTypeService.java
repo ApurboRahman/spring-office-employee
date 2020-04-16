@@ -14,4 +14,6 @@ public interface StatusTypeService {
     int deleteStatus(Date selectFirstDayOfMonth);
 
     int updateStatus(CloseStatusBean closeStatus);
+
+    int getLatestStatus(Date currentMonth);
 }
