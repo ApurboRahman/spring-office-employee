@@ -27,12 +27,30 @@ public class AccessControlHandler {
     }
 
     @Before("execution(* sp.co.soe.emp..*(..)) && @annotation(accessControl)")
-    public void checkMenuPermission(AccessControl accessControl){
+    public void checkMenuPermission(AccessControl accessControl) {
         Set<MenuType> permissions = new HashSet<>(Arrays.asList(accessControl.value()));
         Set<MenuType> menus = userCacheService.getMenusFromRoles(getUserRoleIds());
         try {
             permissions.retainAll(menus);
             if (permissions.isEmpty()) {
+                throw new NullPointerException();
+            }
+        } catch (NullPointerException ex) {
+            log.error("Unauthorized access!");
+            throw new AccessDeniedException("Unauthorized access!");
+        }
+    }
+
+    @Before("execution(* sp.co.soe.emp..*(..)) && @annotation(masterControl)")
+    public void checkUploadAndMasterCreatePermission(MasterControl masterControl) {
+        List<Integer> roleList = Arrays.asList(masterControl.value())
+                .stream()
+                .map(role -> role.getValue())
+                .collect(Collectors.toList());
+        List<Integer> roleIds = getUserRoleIds();
+        try {
+            roleList.retainAll(roleIds);
+            if (roleIds.isEmpty()) {
                 throw new NullPointerException();
             }
         } catch (NullPointerException ex) {
