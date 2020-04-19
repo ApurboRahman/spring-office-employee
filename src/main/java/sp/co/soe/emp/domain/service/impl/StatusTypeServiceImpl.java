@@ -3,6 +3,7 @@ package sp.co.soe.emp.domain.service.impl;
 import com.github.dozermapper.core.Mapper;
 import org.springframework.stereotype.Service;
 import sp.co.soe.emp.app.bean.CloseStatusBean;
+import sp.co.soe.emp.common.util.Const;
 import sp.co.soe.emp.domain.entity.CloseStatus;
 import sp.co.soe.emp.domain.repository.CloseStatusMapper;
 import sp.co.soe.emp.domain.service.StatusTypeService;
@@ -48,5 +49,11 @@ public class StatusTypeServiceImpl implements StatusTypeService {
     public int updateStatus(CloseStatusBean closeStatusBean) {
         CloseStatus closeStatus = statusTypeTransformer.transformForUpdate(closeStatusBean);
         return closeStatusMapper.updateByPrimaryKey(closeStatus);
+    }
+
+    @Override
+    public int getLatestStatus(Date currentMonth) {
+        CloseStatus closeStatus = closeStatusMapper.selectByPrimaryKey(currentMonth);
+        return closeStatus != null ? closeStatus.getCloseFlag() : Const.ZERO;
     }
 }

@@ -12,3 +12,17 @@ spring:
      username: postgres
      #DBパスワード
      password: password
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: username@gmail.com #change email id
+    password: password # insert password
+    protocol: smtp
+    properties.mail.smtp:
+             auth: true
+             starttls.enable: true
+             ssl.trust: smtp.gmail.com
+  messages:
+    cache-duration: PT1S
+  thymeleaf:
+    cache: false

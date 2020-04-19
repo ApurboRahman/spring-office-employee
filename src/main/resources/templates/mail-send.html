@@ -1,0 +1,42 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common/head :: head(title='Employee Inv | Mail sending')"></head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <div th:replace="base :: menu"></div>
+        <div class="d-flex flex-column" id="content-wrapper-danger">
+            <div th:replace="base :: header"></div>
+            <div id="MailAria">
+                <hr>
+                <h3 class="text-black ml-2">棚卸依頼/リマインド送信</h3>
+                <div id="iraiArea">
+                    <h5 class="text-black ml-3">〇棚卸依頼メール送信</h5>
+                    <div class="text-black ml-5"><span
+                            class="text-nowrap text-black">以下の送信ボタンを押すと対象社員全員に対して棚卸依頼メールが送信されます。<br>締め切り日を設定してから送信してください。締め切り日がメール本文中に挿入されます。</span>
+                        <p></p>
+                        <form id="iraiForm" class="form-inline" th:action="@{/mail-send/send}" method="post"><input
+                                class="form-control mr-2" id="iraiForm" name="date"
+                                placeholder="締め切り日　yyyy/mm/dd" type="date">
+                            <input class="btn btn-danger" type="submit" value="送信" /></form>
+                    </div>
+                </div>
+                <p></p>
+                <div id="remaindArea">
+                    <h5 class="text-black ml-3">〇リマインドメール送信</h5>
+                    <div class="text-black ml-5"><span
+                            class="text-nowrap text-black">以下のリマインドメール送信ボタンを押すと棚卸業務が完了していない社員と、<br>その課長およびセキュリティ委員に対してメールが送信されます。</span>
+                        <p></p>
+                        <form id="remaindForm" class="form-inline" th:action="@{/mail-send/reminder}" method="post"><input
+                                class="btn btn-danger" type="submit" value="リマインドメール送信" /></form>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <div th:replace="base :: footer"></div>
+</body>
+
+</html>

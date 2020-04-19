@@ -4,8 +4,9 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public enum Screen {
-    MASTER_REGISTRATION("SC_A1_01"),
-    LEDGER_CREATION("SC_A1_02");
+    MASTER_REGISTRATION("SC_A01_01"),
+    LEDGER_CREATION("SC_A01_02"),
+    MAIL_SEND_RESEND("SC_A03_01");
 
 
     private final String screenId;

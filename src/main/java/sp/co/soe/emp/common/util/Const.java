@@ -7,6 +7,7 @@ import java.util.List;
 public class Const {
 
 	//common url
+	public static final String INIT_URL = "";
 	public static final String LANDING_URL ="/";
 	public static final String LOGIN_URL ="/login";
 	public static final String LOGOUT_URL ="/logout";
@@ -19,6 +20,10 @@ public class Const {
 	public static final String LEDGER_CREATE_URL="/ledger";
 	public static final String LOGIN_ERROR ="/login-error";
 	public static final String ERROR_URL ="/error";
+	public static final String REDIRECT_TO_INFORMATION ="redirect:/information";
+	public static final String MAIL_SEND_URL = "/mail-send";
+	public static final String SEND = "/send";
+	public static final String REMINDER= "/reminder";
 
 	//static folders location
 	public static final String CSS = "/css/**";
@@ -36,13 +41,16 @@ public class Const {
 	public static final String PASSWORD ="password";
 
 	//HTML page names
-	public static final String INIT_URL = "";
 	public static final String LOGIN = "login";
 	public static final String LOGOUT = "logout";
 	public static final String INFORMATION = "information";
 	public static final String MASTER_REGISTRATION = "master-register";
 	public static final String LEDGER_CREATE = "ledger-creation";
+	public static final String MAIL_SEND = "mail-send";
 	public static final String LAYOUT = "layout";
+	public static final String INVENTORY_EMAIL_TEMPLATE= "mail/inventoryEmail";
+	public static final String REMINDER_EMAIL_TEMPLATE= "/reminder";
+	public static final String INVENTORY_EMAIL_TITLE ="email.inventory.title";
 
 	//System params variables name
 	public static String securityCommittee = "1";
@@ -63,6 +71,9 @@ public class Const {
 	public static String EMPTY_STRING = "";
 	public static Date EMPTY_DATE = null;
 	public static int ZERO = 0;
+
+	public static Character checkedFlag = '1';
+	public static Character unCheckedFlag = '0';
 
 	//CSV File upload system parameter id
 	public static String CSV_UPLOAD_PARAMETER_ID = "60000";

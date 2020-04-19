@@ -36,7 +36,7 @@
                             	</a>
                            	</li>
                             <li th:if="${#strings.contains(session.menus,'__#{inventoryRequest}__')}">
-                            	<a href="#" id="MenuMailSend" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<a th:href="@{/mail-send}" id="MenuMailSend" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
                             	<span th:text="__#{inventoryRequestTitle}__"></span>
                             	</a>
                             </li>
