@@ -48,6 +48,9 @@ public class Const {
 	public static final String LEDGER_CREATE = "ledger-creation";
 	public static final String MAIL_SEND = "mail-send";
 	public static final String LAYOUT = "layout";
+	public static final String INVENTORY_EMAIL_TEMPLATE= "mail/inventoryEmail";
+	public static final String REMINDER_EMAIL_TEMPLATE= "/reminder";
+	public static final String INVENTORY_EMAIL_TITLE ="email.inventory.title";
 
 	//System params variables name
 	public static String securityCommittee = "1";
@@ -68,6 +71,9 @@ public class Const {
 	public static String EMPTY_STRING = "";
 	public static Date EMPTY_DATE = null;
 	public static int ZERO = 0;
+
+	public static Character checkedFlag = '1';
+	public static Character unCheckedFlag = '0';
 
 	//CSV File upload system parameter id
 	public static String CSV_UPLOAD_PARAMETER_ID = "60000";

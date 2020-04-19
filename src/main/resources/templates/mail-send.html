@@ -17,7 +17,7 @@
                             class="text-nowrap text-black">以下の送信ボタンを押すと対象社員全員に対して棚卸依頼メールが送信されます。<br>締め切り日を設定してから送信してください。締め切り日がメール本文中に挿入されます。</span>
                         <p></p>
                         <form id="iraiForm" class="form-inline" th:action="@{/mail-send/send}" method="post"><input
-                                class="form-control mr-2" id="iraiForm" name="iraiDay"
+                                class="form-control mr-2" id="iraiForm" name="date"
                                 placeholder="締め切り日　yyyy/mm/dd" type="date">
                             <input class="btn btn-danger" type="submit" value="送信" /></form>
                     </div>
