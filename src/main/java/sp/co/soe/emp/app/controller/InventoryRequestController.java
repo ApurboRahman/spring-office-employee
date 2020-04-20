@@ -34,7 +34,8 @@ public class InventoryRequestController {
     }
 
     @PostMapping(Const.REMINDER)
-    public String sendInventoryRequestReminder(Model model) {
+    public String sendInventoryRequestReminder(Model model, HttpServletResponse response, HttpSession session) {
+        inventoryRequestService.sendInventoryRequestReminder(model, response, session);
         return Const.MAIL_SEND;
     }
 }

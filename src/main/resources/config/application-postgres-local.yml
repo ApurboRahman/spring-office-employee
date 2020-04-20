@@ -15,8 +15,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: username@gmail.com #change email id
-    password: password # insert password
+    username: jsr143rahman@gmail.com #change email id
+    password: L@kmina143 # insert password
     protocol: smtp
     properties.mail.smtp:
              auth: true

@@ -2,7 +2,6 @@ package sp.co.soe.emp.domain.service.mail;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -19,7 +18,9 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @Service
@@ -43,8 +44,8 @@ public class MailService {
         this.springTemplateEngine = springTemplateEngine;
     }
 
-    @Async
-    public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHTML) {
+/*    @Async
+    public boolean sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHTML) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
@@ -55,54 +56,67 @@ public class MailService {
             message.setText(content, isHTML);
             javaMailSender.send(mimeMessage);
             log.debug("Sent email to User '{}'", to);
+            return true;
         } catch (MailException | MessagingException e) {
             e.printStackTrace();
             log.warn("Email could not be sent to user '{}'", to, e);
+            return false;
         }
-    }
+    }*/
 
     @Async
-    public void sendEmailWithAttachment(String to, String subject, String content, boolean isMultipart, boolean isHTML) {
+    public boolean sendEmail(String to, List<String> ccList, String subject, String content, boolean isMultipart, boolean isHTML) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
-            FileSystemResource file
-                    = new FileSystemResource(new File(getDirectoryPath() + File.separator + Const.CARD_RETAIN_CSV));
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, StandardCharsets.UTF_8.name());
+            if (isMultipart) {
+                FileSystemResource file
+                        = new FileSystemResource(new File(getDirectoryPath() + File.separator + Const.CARD_RETAIN_CSV));
+                message.addAttachment(Const.CARD_RETAIN_CSV, file);
+            }
             message.setTo(to);
+
+            if (ccList != null) {
+                String[] cc = ccList.toArray(String[]::new);
+                message.setCc(cc);
+            }
             message.setFrom("email.form");
             message.setSubject(subject);
             message.setSentDate(new Date());
             message.setText(content, isHTML);
-            message.addAttachment(Const.CARD_RETAIN_CSV, file);
             javaMailSender.send(mimeMessage);
             log.debug("Sent email to User '{}'", to);
+            return true;
         } catch (MailException | MessagingException e) {
             e.printStackTrace();
             log.warn("Email could not be sent to user '{}'", to, e);
+            return false;
         }
     }
 
     @Async
-    public void sendEmailFromTemplate(EmployeeInventoryChkHelper user, String deadline, String templateName, String titleKey) {
+    public boolean sendEmailFromTemplate(EmployeeInventoryChkHelper user, List<String> ccList, String deadline, String templateName, String titleKey) {
         Locale locale = Locale.forLanguageTag("en");
         String content = createContent(user, deadline, templateName, locale);
         String subject = messageSource.getMessage(titleKey, null, locale);
-        sendEmail(user.getMailAddress(), subject, content, false, true);
+        return sendEmail(user.getMailAddress(), ccList, subject, content, false, true);
     }
 
     @Async
-    public void sendEmailFromTemplateWithAttachment(EmployeeInventoryChkHelper user, String deadline, String templateName, String titleKey) {
+    public void sendEmailFromTemplateWithAttachment(EmployeeInventoryChkHelper user, List<String> ccList, String deadline, String templateName, String titleKey) {
         Locale locale = Locale.forLanguageTag("en");
         String subject = messageSource.getMessage(titleKey, null, locale);
         String content = createContent(user, deadline, templateName, locale);
-        sendEmailWithAttachment(user.getMailAddress(), subject, content, true, true);
+        sendEmail(user.getMailAddress(), ccList, subject, content, true, true);
     }
 
     private String createContent(EmployeeInventoryChkHelper user, String deadline, String templateName, Locale locale) {
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, "localhost");
-        context.setVariable(DEAD_LINE, deadline);
+        if (null != deadline) {
+            context.setVariable(DEAD_LINE, deadline);
+        }
         return springTemplateEngine.process(templateName, context);
     }
 
