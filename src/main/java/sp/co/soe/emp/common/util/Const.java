@@ -49,11 +49,12 @@ public class Const {
 	public static final String MAIL_SEND = "mail-send";
 	public static final String LAYOUT = "layout";
 	public static final String INVENTORY_EMAIL_TEMPLATE= "mail/inventoryEmail";
-	public static final String REMINDER_EMAIL_TEMPLATE= "/reminder";
+	public static final String REMINDER_EMAIL_TEMPLATE= "mail/reminderEmail";
 	public static final String INVENTORY_EMAIL_TITLE ="email.inventory.title";
+	public static final String REMINDER_EMAIL_TITLE ="email.reminder.title";
 
 	//System params variables name
-	public static String securityCommittee = "1";
+	public static boolean securityCommittee = true;
 	public static String businessPlannerCD1 = "050000";
 	public static String businessPlannerParamNm1 = "事業企画";
 	public static String sectionManagerParamCD1 = "050100";
@@ -69,6 +70,7 @@ public class Const {
 	public static Integer EMPLOYEE_ID_LENGTH = 6;
 	public static char LEADING_ZERO = '0';
 	public static String EMPTY_STRING = "";
+	public static String NULL_STRING = null;
 	public static Date EMPTY_DATE = null;
 	public static int ZERO = 0;
 

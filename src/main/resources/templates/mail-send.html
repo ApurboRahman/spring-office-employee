@@ -9,6 +9,24 @@
         <div class="d-flex flex-column" id="content-wrapper-danger">
             <div th:replace="base :: header"></div>
             <div id="MailAria">
+                <div>
+                    <div th:if="${status}=='sendSuccess'"
+                         class="alert alert-success master-registration-error">
+                        <span th:text="#{emailSendSuccess}"></span>
+                    </div>
+                    <div th:if="${status}=='remindSuccess'"
+                         class="alert alert-danger master-registration-error">
+                        <span th:text=" #{remindSendSuccess}"></span>
+                    </div>
+                    <div th:if="${error}=='sendError'"
+                         class="alert alert-danger master-registration-error">
+                        <span th:text=" #{emailSendError}"></span>
+                    </div>
+                    <div th:if="${error}=='remindError'"
+                         class="alert alert-danger master-registration-error">
+                        <span th:text=" #{remindSendError}"></span>
+                    </div>
+                </div>
                 <hr>
                 <h3 class="text-black ml-2">棚卸依頼/リマインド送信</h3>
                 <div id="iraiArea">

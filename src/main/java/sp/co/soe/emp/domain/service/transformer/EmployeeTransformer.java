@@ -42,12 +42,14 @@ public class EmployeeTransformer implements Transformer<EmployeeInformationBean,
     /**
      * transform back from S type to T type
      *
-     * @param target
+     * @param source
      * @return
      */
     @Override
-    public EmployeeInformationBean transformBack(EmployeesM target) {
-        return null;
+    public EmployeeInformationBean transformBack(EmployeesM source) {
+        EmployeeInformationBean bean = new EmployeeInformationBean();
+        dozerMapper.map(source, bean);
+        return bean;
     }
 
     @Override
