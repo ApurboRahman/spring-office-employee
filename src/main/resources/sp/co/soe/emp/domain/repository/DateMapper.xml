@@ -32,4 +32,8 @@
 		SELECT cast(date_trunc('day', current_timestamp) + interval '90 day' as date);
 	</select>
 
+<select id="selectMonthFromCurrentDate" resultType="int">
+		SELECT EXTRACT(MONTH FROM  CURRENT_DATE);
+	</select>
+
 </mapper>

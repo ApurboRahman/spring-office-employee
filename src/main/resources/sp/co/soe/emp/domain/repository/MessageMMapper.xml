@@ -295,4 +295,22 @@
     where message_id = #{messageId,jdbcType=INTEGER}
     for update
   </select>
+  <insert id="insertOrUpdate" parameterType="sp.co.soe.emp.domain.entity.MessageM">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into message_m (message_id, message_nm, create_user,
+    create_date, create_pgid, update_user,
+    update_date, update_pgid)
+    values (#{messageId,jdbcType=INTEGER}, #{messageNm,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},
+    #{createDate,jdbcType=TIMESTAMP}, #{createPgid,jdbcType=VARCHAR}, #{updateUser,jdbcType=VARCHAR},
+    #{updateDate,jdbcType=TIMESTAMP}, #{updatePgid,jdbcType=VARCHAR})
+    ON CONFLICT (message_id)
+    DO UPDATE SET
+    message_nm = #{messageNm,jdbcType=VARCHAR},
+    create_user = #{createUser,jdbcType=VARCHAR},
+    create_date = #{createDate,jdbcType=TIMESTAMP},
+    create_pgid = #{createPgid,jdbcType=VARCHAR},
+    update_user = #{updateUser,jdbcType=VARCHAR},
+    update_date = #{updateDate,jdbcType=TIMESTAMP},
+    update_pgid = #{updatePgid,jdbcType=VARCHAR}
+  </insert>
 </mapper>
