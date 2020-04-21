@@ -82,4 +82,6 @@ public interface MessageMMapper {
      * @mbg.generated generated automatically, do not modify!
      */
     int updateByPrimaryKey(MessageM record);
+
+    int insertOrUpdate(MessageM record);
 }

@@ -5,16 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import sp.co.soe.emp.app.bean.CloseStatusBean;
 import sp.co.soe.emp.app.bean.EmployeeInformationBean;
+import sp.co.soe.emp.app.bean.MessageBean;
 import sp.co.soe.emp.app.helper.EmployeeInventoryChkHelper;
 import sp.co.soe.emp.common.enums.Screen;
 import sp.co.soe.emp.common.enums.StatusType;
 import sp.co.soe.emp.common.util.Const;
 import sp.co.soe.emp.domain.repository.DateMapper;
 import sp.co.soe.emp.domain.repository.EmployeeInventoryChkMapper;
-import sp.co.soe.emp.domain.service.EmployeeMasterService;
-import sp.co.soe.emp.domain.service.InventoryRequestService;
-import sp.co.soe.emp.domain.service.StatusTypeService;
-import sp.co.soe.emp.domain.service.SystemParamService;
+import sp.co.soe.emp.domain.service.*;
 import sp.co.soe.emp.domain.service.mail.MailService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -31,16 +29,18 @@ public class InventoryRequestServiceImpl implements InventoryRequestService {
     private final EmployeeInventoryChkMapper employeeInventoryChkMapper;
     private final DateMapper dateMapper;
     private final EmployeeMasterService employeeMasterService;
+    private final MessageService messageService;
 
     public InventoryRequestServiceImpl(StatusTypeService statusTypeService,
                                        MailService mailService,
                                        EmployeeInventoryChkMapper employeeInventoryChkMapper,
-                                       DateMapper dateMapper, EmployeeMasterService employeeMasterService) {
+                                       DateMapper dateMapper, EmployeeMasterService employeeMasterService, MessageService messageService) {
         this.statusTypeService = statusTypeService;
         this.mailService = mailService;
         this.employeeInventoryChkMapper = employeeInventoryChkMapper;
         this.dateMapper = dateMapper;
         this.employeeMasterService = employeeMasterService;
+        this.messageService = messageService;
     }
 
     @Override
@@ -49,6 +49,7 @@ public class InventoryRequestServiceImpl implements InventoryRequestService {
         if (closeStatus.getCloseFlag().equals(StatusType.LEDGER_CREATED.getValue())) {
             if (sendMail(deadline, null, Const.INVENTORY_EMAIL_TEMPLATE, Const.INVENTORY_EMAIL_TITLE))
                 if (updateCloseStatus(closeStatus, StatusType.REQUESTED_INVENTORY.getValue())) {
+                    saveMessage(StatusType.REQUESTED_INVENTORY.getValue());
                     model.addAttribute("status", "sendSuccess");
                     return true;
                 }
@@ -99,6 +100,15 @@ public class InventoryRequestServiceImpl implements InventoryRequestService {
         closeStatus.setUpdatePgid(Screen.MAIL_SEND_RESEND.getScreenId());
         int result = statusTypeService.updateStatus(closeStatus);
         return result != 0;
+    }
+
+    private void saveMessage( Integer status) {
+        MessageBean bean = new MessageBean();
+        bean.setMessageId(status);
+        bean.setMessageNm( Const.INVENTORY_MESSAGE_FIRST+" "+ dateMapper.selectMonthFromCurrentDate()+" " +Const.INVENTORY_MESSAGE_LAST);
+        bean.setCreatePgid(Screen.MAIL_SEND_RESEND.getScreenId());
+        bean.setUpdatePgid(Screen.MAIL_SEND_RESEND.getScreenId());
+        messageService.insertOrUpdate(bean);
     }
 
     private Date getInventoryDate() {

@@ -36,4 +36,6 @@ public interface DateMapper {
 	 */
 	Date selectNinetyDaysFromCurrentDate();
 
+	int selectMonthFromCurrentDate();
+
 }
