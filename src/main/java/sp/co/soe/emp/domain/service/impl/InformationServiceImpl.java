@@ -49,10 +49,6 @@ public class InformationServiceImpl implements InformationService {
             model.addAttribute("messageShow", true);
             model.addAttribute("message", getMessage());
         }
-        //user roles
-        //user menu permission
-        //user message
-
     }
 
     @Override

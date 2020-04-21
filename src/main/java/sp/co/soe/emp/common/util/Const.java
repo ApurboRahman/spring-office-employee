@@ -80,7 +80,8 @@ public class Const {
 	//CSV File upload system parameter id
 	public static String CSV_UPLOAD_PARAMETER_ID = "60000";
 	public static String PASSWORD_VALID_END_DATE = "9999/12/31";
-
+	public static String INVENTORY_MESSAGE_FIRST="依頼メール送信済。";
+	public static String INVENTORY_MESSAGE_LAST= "月度棚卸実施中。";
 	public static enum EnumEnrollmentType{
 
 		INCUMBENT("在職"),
