@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Component;
 import sp.co.soe.emp.domain.entity.CardsChk;
@@ -82,4 +83,9 @@ public interface CardsChkMapper {
      * @mbg.generated generated automatically, do not modify!
      */
     int updateByPrimaryKey(CardsChk record);
+
+    List<Date>selectDistinctPeriodMonth();
+
+    @Select("select distinct TO_DATE(period_month,'YYYY-MM-DD') from cards_chk order by period_month")
+    List<Date>selectPeriodMonth();
 }

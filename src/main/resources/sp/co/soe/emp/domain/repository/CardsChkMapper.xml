@@ -580,4 +580,9 @@
       and employee_id = #{employeeId,jdbcType=CHAR}
     for update
   </select>
+
+  <select id="selectDistinctPeriodMonth"  resultType="java.util.Date">
+    select distinct TO_DATE(period_month,'YYYY-MM-DD')
+    from cards_chk order by period_month
+  </select>
 </mapper>

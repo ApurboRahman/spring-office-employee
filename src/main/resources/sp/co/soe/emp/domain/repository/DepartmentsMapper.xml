@@ -331,4 +331,8 @@
       update_pgid = #{updatePgid,jdbcType=VARCHAR}
     where dept_code = #{deptCode,jdbcType=VARCHAR}
   </update>
+
+  <select id="getDepartmentList" resultMap="BaseResultMap">
+    SELECT dept_code AS id, dept_name AS name FROM departments order by dept_code;
+  </select>
 </mapper>
