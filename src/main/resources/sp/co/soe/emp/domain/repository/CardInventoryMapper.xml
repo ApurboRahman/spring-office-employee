@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sp.co.soe.emp.domain.repository.CardInventoryMapper">
+    <resultMap id="CardInventoryHelper" type="sp.co.soe.emp.app.dto.CardInventoryDTO">
+        <result column="period_month" jdbcType="DATE" property="periodMonth"/>
+        <result column="employee_id" jdbcType="VARCHAR" property="employeeId"/>
+        <result column="first_name" jdbcType="VARCHAR" property="firstName"/>
+        <result column="last_name" jdbcType="VARCHAR" property="lastName"/>
+        <result column="dept_code" jdbcType="VARCHAR" property="deptCode"/>
+        <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
+        <result column="work_nm" jdbcType="VARCHAR" property="workName"/>
+        <result column="place_nm" jdbcType="VARCHAR" property="placeName"/>
+        <result column="empcard_owner" jdbcType="CHAR" property="empcardOwner"/>
+        <result column="card1_nm" jdbcType="VARCHAR" property="card1Nm"/>
+        <result column="card2_nm" jdbcType="VARCHAR" property="card2Nm"/>
+        <result column="card3_nm" jdbcType="VARCHAR" property="card3Nm"/>
+        <result column="card4_nm" jdbcType="VARCHAR" property="card4Nm"/>
+        <result column="empcard_flg" jdbcType="CHAR" property="empcardFlg"/>
+        <result column="card1_flg" jdbcType="CHAR" property="card1Flg"/>
+        <result column="card2_flg" jdbcType="CHAR" property="card2Flg"/>
+        <result column="card3_flg" jdbcType="CHAR" property="card3Flg"/>
+        <result column="card4_flg" jdbcType="CHAR" property="card4Flg"/>
+        <result column="chk_user" jdbcType="VARCHAR" property="chkUser"/>
+        <result column="chk_date" jdbcType="TIMESTAMP" property="chkDate"/>
+        <result column="approval_user" jdbcType="VARCHAR" property="approvalUser"/>
+        <result column="approval_date" jdbcType="TIMESTAMP" property="approvalDate"/>
+        <result column="notes" jdbcType="VARCHAR" property="notes"/>
+        <result column="chk_flg" jdbcType="CHAR" property="chkFlg"/>
+        <result column="approval_flg" jdbcType="CHAR" property="approvalFlg"/>
+    </resultMap>
+
+    <select id="getCardInventory" resultMap="CardInventoryHelper">
+         SELECT chk.period_month ,emp.employee_id ,emp.first_name ,emp.last_name
+                ,dep.dept_code ,dep.dept_name ,chk.work_nm ,chk.place_nm
+                ,crd.empcard_owner ,crd.card1_nm ,crd.card2_nm ,crd.card3_nm
+                ,crd.card4_nm ,chk.empcard_flg ,chk.card1_flg ,chk.card2_flg
+                ,chk.card3_flg ,chk.card4_flg ,chk.chk_user ,chk.chk_date
+                ,chk.approval_user ,chk.approval_date ,chk.notes
+                ,chk.chk_flg ,chk.approval_flg
+         FROM EMPLOYEES_M emp
+              ,DEPARTMENTS     dep
+              ,CARDS_RETAIN    crd
+              ,CARDS_CHK       chk
+         WHERE emp.dept_code =#{department,jdbcType=VARCHAR}
+         AND chk.period_month =#{currentDate,jdbcType=DATE}
+         AND emp.dept_code = dep.dept_code
+         AND emp.employee_id = crd.employee_id
+         AND emp.employee_id = chk.employee_id
+         ORDER BY emp.employee_id
+</select>
+</mapper>

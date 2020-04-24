@@ -8,6 +8,8 @@ import java.util.List;
 
 @Service
 public interface EmployeeMasterService {
+    EmployeeInformationBean getEmployeeDetails(String employeeId);
+
     List<String> getAllEmployeesId();
 
     List<EmployeeInformationBean> getAllBusinessPlanners();

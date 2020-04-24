@@ -38,6 +38,11 @@ public class CardMasterTransformer implements Transformer<CardInformationBean, C
 
     @Override
     public CardsRetain transformForUpdate(CardInformationBean source) {
-        return null;
+        CardsRetain cardsRetain = new CardsRetain();
+        String loginUser = UserInfoHelper.getLoginUserInfo().getUserName();
+        source.setUpdateUser(loginUser);
+        source.setUpdateDate(dateMapper.selectTimestamp());
+        dozerMapper.map(source, cardsRetain);
+        return cardsRetain;
     }
 }

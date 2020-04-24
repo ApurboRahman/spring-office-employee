@@ -8,12 +8,12 @@
                     <div class="collapse show" id="collapse-Inv">
                         <ul>
                             <li th:if="${#strings.contains(session.menus,'__#{securityCardInventory}__')}">
-                            	<a href="#" id="MenuCardInventory" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<a th:href="@{/card-inventory}" id="MenuCardInventory" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
                             	<span th:text="__#{securityCardInventoryTitle}__"></span>
 								</a>
                             </li>
                             <li th:if="${#strings.contains(session.menus,'__#{vpnDongleInventory}__')}">
-                            	<a href="#" id="MenuVpnInventory" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<a th:href="@{/vpn-inventory}" id="MenuVpnInventory" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
                             	<span th:text="__#{vpnDongleInventoryTitle}__"></span>
                             	</a>
                             </li>
@@ -41,22 +41,22 @@
                             	</a>
                             </li>
                             <li th:if="${#strings.contains(session.menus,'__#{monthlyClosing}__')}">
-                            	<a href="#" id="MenuMonthClose" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<a th:href="@{/monthly-closing}" id="MenuMonthClose" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
                             	<span th:text="__#{monthlyClosingTitle}__"></span>
                             	</a>
                             </li>
                              <li th:if="${#strings.contains(session.menus,'__#{batchSchedule}__')}">
-                            	<a href="#" id="MenuBatchSchedule" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<a href="@{batch-schedule}" id="MenuBatchSchedule" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
                             	<span th:text="__#{batchScheduleTitle}__"></span>
                             	</a>
                             </li>
                             <li th:if="${#strings.contains(session.menus,'__#{userPermission}__')}">
-                            	<a href="#" id="MenuUserSetting" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<a th:href="@{/user-permission}" id="MenuUserSetting" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
                             	<span th:text="__#{userPermissionTitle}__"></span>
                             	</a>
                             </li>
                             <li th:if="${#strings.contains(session.menus,'__#{inventoryStatus}__')}">
-                            	<a href="#" id="MenuStatusConfirm" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<a th:href="@{inventory-status}" id="MenuStatusConfirm" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
                             	<span th:text="__#{inventoryStatusTitle}__"></span>
                             	</a>
                             </li>

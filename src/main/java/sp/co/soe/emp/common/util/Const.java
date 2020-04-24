@@ -24,6 +24,7 @@ public class Const {
 	public static final String MAIL_SEND_URL = "/mail-send";
 	public static final String SEND = "/send";
 	public static final String REMINDER= "/reminder";
+	public static final String CARD_INVENTORY_URL= "/card-inventory";
 
 	//static folders location
 	public static final String CSS = "/css/**";
@@ -47,6 +48,7 @@ public class Const {
 	public static final String MASTER_REGISTRATION = "master-register";
 	public static final String LEDGER_CREATE = "ledger-creation";
 	public static final String MAIL_SEND = "mail-send";
+	public static final String CARD_INVENTORY = "card-inventory";
 	public static final String LAYOUT = "layout";
 	public static final String INVENTORY_EMAIL_TEMPLATE= "mail/inventoryEmail";
 	public static final String REMINDER_EMAIL_TEMPLATE= "mail/reminderEmail";
