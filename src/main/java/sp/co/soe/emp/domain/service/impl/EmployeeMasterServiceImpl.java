@@ -30,6 +30,13 @@ public class EmployeeMasterServiceImpl implements EmployeeMasterService {
     }
 
     @Override
+    public EmployeeInformationBean getEmployeeDetails(String employeeId) {
+        EmployeesM employeesM = employeesMMapper.selectByPrimaryKey(employeeId);
+        EmployeeInformationBean employeeBean = employeeTransformer.transformBack(employeesM);
+        return employeeBean;
+    }
+
+    @Override
     public List<String> getAllEmployeesId() {
         return employeesMMapper.getAllEmployeesId();
     }

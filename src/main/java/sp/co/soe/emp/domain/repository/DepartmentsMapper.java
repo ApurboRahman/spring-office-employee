@@ -1,10 +1,16 @@
 package sp.co.soe.emp.domain.repository;
 
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 import sp.co.soe.emp.domain.entity.Departments;
 import sp.co.soe.emp.domain.entity.DepartmentsExample;
 
+@Component
+@Mapper
 public interface DepartmentsMapper {
 
 	/**
@@ -72,4 +78,6 @@ public interface DepartmentsMapper {
 	 * @mbg.generated  Sat Apr 04 17:59:08 JST 2020
 	 */
 	int updateByPrimaryKey(Departments record);
+
+	List getDepartmentList();
 }

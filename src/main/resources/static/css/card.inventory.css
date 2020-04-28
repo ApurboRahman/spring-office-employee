@@ -1,0 +1,91 @@
+a.acctext {
+  font-size: small;
+  color: black;
+}
+
+#acclist {
+  color: black;
+}
+
+#TanaMenuBtn[aria-expanded=true]:after {
+  content: "-棚卸";
+}
+
+#TanaMenuBtn[aria-expanded=false]:after {
+  content: "+棚卸";
+}
+
+#KanriMenuBtn[aria-expanded=false]:after {
+  content: "+管理者";
+}
+
+#KanriMenuBtn[aria-expanded=true]:after {
+  content: "-管理者";
+}
+
+#logout {
+  color: rgb(133,135,150);
+}
+
+#MyName {
+  margin-bottom: 0px;
+}
+
+text-black {
+  color: black;
+}
+
+.text-black {
+  color: #dc3545;
+}
+
+.notCheck{
+ background-color:#ffff00;
+}
+
+#dataTablediv {
+  overflow: scroll;
+}
+
+td.deptName {
+  min-width: 320px;
+  white-space: normal;
+}
+
+option {
+  color: black;
+}
+
+.searchbtn {
+  min-width: 58px;
+  max-width: 58px;
+}
+
+.table-bordered-danger, .table-bordered-danger td, .table-bordered-danger th {
+  border: 1px solid #fab5ae;
+}
+.page-link-danger {
+  position: relative;
+  display: block;
+  padding: .5rem .75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #dc3545;
+  background-color: #fff;
+  border: 1px solid #ebbdbd;
+}
+
+.page-item.active .page-link-danger {
+  z-index: 1;
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #e74a3b;
+}
+
+.page-item.disabled .page-link-danger {
+  color: #e74a3b;
+  pointer-events: none;
+  cursor: auto;
+  background-color: #f8f9fc;
+  border-color: #e74a3b;
+}
