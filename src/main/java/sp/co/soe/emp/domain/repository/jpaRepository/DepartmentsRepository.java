@@ -13,10 +13,7 @@ import sp.co.soe.emp.domain.entity.DepartmentsExample;
 
 import java.util.List;
 
-
-@Repository("department")
+@Repository
 public interface DepartmentsRepository extends JpaRepository<Departments, String> {
 
-	@Query(value = "SELECT  a.deptCode as id, a.deptName as name FROM Departments as a")
-	List getDepartmentList();
 }

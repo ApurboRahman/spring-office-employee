@@ -86,6 +86,9 @@ public interface CardsChkMapper {
 
     List<Date>selectDistinctPeriodMonth();
 
-    @Select("select distinct TO_DATE(period_month,'YYYY-MM-DD') from cards_chk order by period_month")
+    @Select("SELECT DISTINCT ON (period_month) period_month FROM cards_chk ORDER BY period_month")
     List<Date>selectPeriodMonth();
+
+    @Select("SELECT DISTINCT ON (period_month) period_month FROM cards_chk ORDER BY period_month")
+    List<String>getPeriodMonth();
 }

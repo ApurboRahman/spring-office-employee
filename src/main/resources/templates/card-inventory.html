@@ -16,37 +16,39 @@
             <div id="dataTable">
                 <div class="card shadow d-flex">
                     <div class="card-body text-black">
-                        <form action="" method="post">
+                        <form th:action="@{/card-inventory/save}" th:object="${cardInventoryForm}" method="post" data-leave-confirm="true">
                             <div class="form-row">
                                 <div class="col-md-2 col-lg-2 col-xl-2 d-inline-flex align-items-xl-center"><label
-                                        class="text-nowrap mr-2" for="selectedMonth">対象年月</label><select
-                                        class="form-control" name="selectedMonth">
-                                        <option value="2019年10月">2019年10月</option>
-                                        <option value="2019年11月">2019年11月</option>
-                                        <option value="2019年12月" selected="">2019年12月</option>
-                                        <option value="2020年1月">2020年1月</option>
-                                        <option value="2020年2月">2020年2月</option>
-                                    </select></div>
+                                        class="text-nowrap mr-2" for="periodMonth">対象年月</label>
+                                    <select class="form-control" id="periodMonth"  name="periodMonth" th:field="*{periodMonth}">
+
+                                        <option value=''>－－－</option>
+                                        <!--<option th:each="d : ${periodMonths}" th:value="${d}" th:inline="text" th:selected="${#dates.format(d,'yyyy-MM-dd')} == ${#dates.format(currentDate,'yyyy-MM-dd')}">[[${#dates.format(d, 'yyyy年MM月')}]]</option>-->
+                                        <option th:each="d : ${periodMonths}" th:value="${d}" th:inline="text" th:selected="${d} == *{periodMonth}">[[${d}]]</option>
+
+                                    </select>
+                                </div>
                                 <div class="col-md-4 col-lg-4 col-xl-4 text-nowrap d-inline-flex align-items-xl-center">
-                                    <label class="mr-2" for="selectedDept">所属</label><select class="form-control"
-                                        name="selectedDept">
-                                        <option value="テスト事業本部デフォルト部">テスト事業本部デフォルト部</option>
-                                        <option value="テスト事業本部デフォルト部テストA課" selected>テスト事業本部デフォルト部テストA課</option>
-                                        <option value="テスト事業本部デフォルト部テストB課">テスト事業本部デフォルト部テストB課</option>
-                                        <option value="テスト事業本部デフォルト部テストC課">テスト事業本部デフォルト部テストC課</option>
-                                    </select></div>
+                                    <label class="mr-2" for="selectedDept">所属</label>
+                                    <select class="form-control" th:name="department" th:field="*{department}">
+                                        <option value="">－－－</option>
+                                        <option th:each="d : ${departmentList}" th:value="${d.deptCode}"
+                                                th:selected="${d.deptCode} == ${session?.user?.deptCode}" th:inline="text">[[${d.deptName}]]</option>
+                                    </select>
+                                </div>
                                  <div
                                 class="col-md-1 col-lg-1 col-xl-1 offset-md-5 offset-lg-5 offset-xl-5 d-md-flex d-lg-flex d-xl-flex justify-content-md-end justify-content-lg-end justify-content-xl-end">
-                                    <div><input class="form-control btn btn-danger searchbtn" type="submit" value="検索">
+                                    <div>
+                                        <!--<input class="form-control btn btn-danger searchbtn" type="submit" value="検索">-->
+                                        <a th:href="'/card-inventory/search/' + *{periodMonth}+'/'+*{department}"> <span class="form-control btn btn-danger searchbtn" th:text="検索"></span></a>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                        <div class="table-responsive table-bordered-danger text-nowrap table mt-2" role="grid"
-                            aria-describedby="dataTable_info" overflow-x="scroll" id="dataTableTable">
-                            <table class="table table-bordered-danger table-hover dataTable my-0 text-black"
-                                id="dataTableTable">
-                                <thead class="bg-danger">
+                            <div class="table-responsive table-bordered-danger text-nowrap table mt-2" role="grid"
+                                 aria-describedby="dataTable_info" overflow-x="scroll" id="dataTableTable">
+                                <table class="table table-bordered-danger table-hover dataTable my-0 text-black"
+                                       id="dataTableTable">
+                                    <thead class="bg-danger">
                                     <tr>
                                         <th></th>
                                         <th>所属</th>
@@ -70,666 +72,78 @@
                                         <th>確認</th>
                                         <th>承認</th>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="rel, stat : ${cardInventoryForm.cardInventoryDtoList}">
                                         <td><button class="btn btn-danger" type="button">編集</button></td>
-                                        <td class="UserName">田中 一郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser">山田太郎</td>
-                                        <td class="AppDate">2020/02/03 12:00</td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
+                                        <td class="UserName">
+                                        <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].firstName + ' '+ cardInventoryForm.cardInventoryDtoList[__${stat.index}__].lastName}" />
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].employeeId}"/>
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].periodMonth}"/>
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].firstName}"/>
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].lastName}"/>
+                                        </td>
+                                        <td class="deptName"> <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].deptName}"/></td>
+                                        <td class="WorkName"> <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].workName}"/></td>
+                                        <td class="PlaceName"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].placeName}"/></td>
+                                        <td class="EmpCardFlg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].empcardFlg}"/>〇</td>
+                                        <td class="Card1Name"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card1Nm}"/></td>
+                                        <td class="Card1Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card1Flg}"/>〇</td>
+                                        <td class="Card2Name"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card2Nm}"/></td>
+                                        <td class="Card2Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card2Flg}"/>〇</td>
+                                        <td class="Card3Name"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card3Nm}"/></td>
+                                        <td class="Card3Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card3Flg}"/>〇</td>
+                                        <td class="Card4Name"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card4Nm}"/></td>
+                                        <td class="Card4Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card4Flg}"/>〇</td>
+                                        <td class="ChkUser"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkUser}"/></td>
+                                        <td class="ChkDate"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkDate}"/></td>
+                                        <td class="AppUser"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalUser}"/></td>
+                                        <td class="AppDate"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalDate}"/></td>
+                                        <td class="notes"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].notes}"/></td>
+                                        <!--<td class="confirm"><input disabled type="checkbox" checked th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkFlg}"></td>-->
+                                        <td class="confirm"><input disabled type="checkbox" checked ></td>
+                                        <!--<td class="approve"><input type="checkbox" checked th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalFlg}"></td>-->
                                         <td class="approve"><input type="checkbox" checked></td>
                                     </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 二郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser"></td>
-                                        <td class="AppDate"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 三郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name"></td>
-                                        <td class="Card4Flg"></td>
-                                        <td class="ChkUser notCheck"></td>
-                                        <td class="ChkDate notCheck"></td>
-                                        <td class="AppUser notCheck"></td>
-                                        <td class="AppDate notCheck"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox"></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 一郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser">山田太郎</td>
-                                        <td class="AppDate">2020/02/03 12:00</td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox" checked></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 二郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser"></td>
-                                        <td class="AppDate"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 三郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name"></td>
-                                        <td class="Card4Flg"></td>
-                                        <td class="ChkUser notCheck"></td>
-                                        <td class="ChkDate notCheck"></td>
-                                        <td class="AppUser notCheck"></td>
-                                        <td class="AppDate notCheck"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox"></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 一郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser">山田太郎</td>
-                                        <td class="AppDate">2020/02/03 12:00</td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox" checked></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 二郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser"></td>
-                                        <td class="AppDate"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 三郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name"></td>
-                                        <td class="Card4Flg"></td>
-                                        <td class="ChkUser notCheck"></td>
-                                        <td class="ChkDate notCheck"></td>
-                                        <td class="AppUser notCheck"></td>
-                                        <td class="AppDate notCheck"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox"></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 一郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser">山田太郎</td>
-                                        <td class="AppDate">2020/02/03 12:00</td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox" checked></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 二郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser"></td>
-                                        <td class="AppDate"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 三郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name"></td>
-                                        <td class="Card4Flg"></td>
-                                        <td class="ChkUser notCheck"></td>
-                                        <td class="ChkDate notCheck"></td>
-                                        <td class="AppUser notCheck"></td>
-                                        <td class="AppDate notCheck"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox"></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 一郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser">山田太郎</td>
-                                        <td class="AppDate">2020/02/03 12:00</td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox" checked></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 二郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser"></td>
-                                        <td class="AppDate"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 三郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name"></td>
-                                        <td class="Card4Flg"></td>
-                                        <td class="ChkUser notCheck"></td>
-                                        <td class="ChkDate notCheck"></td>
-                                        <td class="AppUser notCheck"></td>
-                                        <td class="AppDate notCheck"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox"></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 一郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser">山田太郎</td>
-                                        <td class="AppDate">2020/02/03 12:00</td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox" checked></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 二郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser"></td>
-                                        <td class="AppDate"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 三郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name"></td>
-                                        <td class="Card4Flg"></td>
-                                        <td class="ChkUser notCheck"></td>
-                                        <td class="ChkDate notCheck"></td>
-                                        <td class="AppUser notCheck"></td>
-                                        <td class="AppDate notCheck"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox"></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 一郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser">山田太郎</td>
-                                        <td class="AppDate">2020/02/03 12:00</td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox" checked></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 二郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser"></td>
-                                        <td class="AppDate"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 三郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name"></td>
-                                        <td class="Card4Flg"></td>
-                                        <td class="ChkUser notCheck"></td>
-                                        <td class="ChkDate notCheck"></td>
-                                        <td class="AppUser notCheck"></td>
-                                        <td class="AppDate notCheck"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox"></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 一郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser">山田太郎</td>
-                                        <td class="AppDate">2020/02/03 12:00</td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox" checked></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 二郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser"></td>
-                                        <td class="AppDate"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 三郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name"></td>
-                                        <td class="Card4Flg"></td>
-                                        <td class="ChkUser notCheck"></td>
-                                        <td class="ChkDate notCheck"></td>
-                                        <td class="AppUser notCheck"></td>
-                                        <td class="AppDate notCheck"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox"></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 一郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser">山田太郎</td>
-                                        <td class="AppDate">2020/02/03 12:00</td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox" checked></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 二郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name">DDカード</td>
-                                        <td class="Card4Flg">〇</td>
-                                        <td class="ChkUser">鈴木太郎</td>
-                                        <td class="ChkDate">2020/02/03 12:00</td>
-                                        <td class="AppUser"></td>
-                                        <td class="AppDate"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox" checked></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button class="btn btn-primary" type="button">編集</button></td>
-                                        <td class="UserName">田中 三郎</td>
-                                        <td class="deptName">テスト事業本部デフォルト部テストA課<br></td>
-                                        <td class="WorkName">オフショア開発</td>
-                                        <td class="PlaceName">新横浜</td>
-                                        <td class="EmpCardFlg">〇</td>
-                                        <td class="Card1Name">AAカード</td>
-                                        <td class="Card1Flg">〇</td>
-                                        <td class="Card2Name">BBカード</td>
-                                        <td class="Card2Flg">〇</td>
-                                        <td class="Card3Name">CCカード</td>
-                                        <td class="Card3Flg">〇</td>
-                                        <td class="Card4Name"></td>
-                                        <td class="Card4Flg"></td>
-                                        <td class="ChkUser notCheck"></td>
-                                        <td class="ChkDate notCheck"></td>
-                                        <td class="AppUser notCheck"></td>
-                                        <td class="AppDate notCheck"></td>
-                                        <td class="notes">備考メモメモメモ</td>
-                                        <td class="confirm"><input disabled type="checkbox"></td>
-                                        <td class="approve"><input type="checkbox"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div
-                                class="col-sm-12 col-md-12 col-lg-5 col-xl-5 d-inline-flex d-print-inline-flex d-md-inline-flex d-lg-inline-flex d-xl-inline-flex align-items-sm-center align-items-md-center align-items-lg-center align-items-xl-center">
-                                <nav
-                                    class="d-lg-flex justify-content-lg-start justify-content-xl-start dataTables_paginate paging_simple_numbers">
-                                    <ul class="pagination">
-                                        <li class="page-item disabled"><a class="page-link-danger" href="#"><span
-                                                    aria-hidden="true">&lt;&lt;</span></a></li>
-                                        <li class="page-item disabled"><a class="page-link-danger" href="#"><span
-                                                    aria-hidden="true">&lt;</span></a></li>
-                                        <li class="page-item active"><a class="page-link-danger" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link-danger" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link-danger" href="#">4</a></li>
-                                        <li class="page-item"><a class="page-link-danger" href="#">5</a></li>
-                                        <li class="page-item"><a class="page-link-danger" href="#">6</a></li>
-                                        <li class="page-item"><a class="page-link-danger" href="#"><span
-                                                    aria-hidden="true">&gt;</span></a></li>
-                                        <li class="page-item"><a class="page-link-danger" href="#" <span
-                                                aria-hidden="true">&gt;&gt;</span></a></li>
-                                        <li class="page-item disabled mt-2"><span></span>(31-60/170)</span></li>
-                                    </ul>
-                                </nav>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div
-                                class="col-sm-12 col-md-12 col-lg-6 col-xl-6 offset-lg-1 offset-xl-1 justify-content-xl-end">
-                                <div class="row">
-                                    <div class="col d-md-flex d-lg-flex justify-content-md-end justify-content-lg-end">
-                                        <input type="submit" class="btn btn-danger mr-2" value="保存">
-                                        <input type="reset" class="btn btn-danger mr-2" value="クリア">
-                                        <input type="submit" class="btn btn-danger mr-2" value="承認">
+                            <div class="row">
+                                <div
+                                        class="col-sm-12 col-md-12 col-lg-5 col-xl-5 d-inline-flex d-print-inline-flex d-md-inline-flex d-lg-inline-flex d-xl-inline-flex align-items-sm-center align-items-md-center align-items-lg-center align-items-xl-center">
+                                    <nav
+                                            class="d-lg-flex justify-content-lg-start justify-content-xl-start dataTables_paginate paging_simple_numbers">
+                                        <ul class="pagination">
+                                            <li class="page-item disabled"><a class="page-link-danger" href="#"><span
+                                                    aria-hidden="true">&lt;&lt;</span></a></li>
+                                            <li class="page-item disabled"><a class="page-link-danger" href="#"><span
+                                                    aria-hidden="true">&lt;</span></a></li>
+                                            <li class="page-item active"><a class="page-link-danger" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#">3</a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#">4</a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#">5</a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#">6</a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#"><span
+                                                    aria-hidden="true">&gt;</span></a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#" <span
+                                                    aria-hidden="true">&gt;&gt;</span></a></li>
+                                            <li class="page-item disabled mt-2"><span></span>(31-60/170)</span></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div
+                                        class="col-sm-12 col-md-12 col-lg-6 col-xl-6 offset-lg-1 offset-xl-1 justify-content-xl-end">
+                                    <div class="row">
+                                        <div class="col d-md-flex d-lg-flex justify-content-md-end justify-content-lg-end">
+                                            <input type="submit" class="btn btn-danger mr-2" value="保存">
+                                            <input type="reset" class="btn btn-danger mr-2" value="クリア">
+                                            <input type="submit" class="btn btn-danger mr-2" value="承認">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
