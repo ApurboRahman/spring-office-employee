@@ -66,6 +66,13 @@ public class CardLedgerTransformer implements Transformer<CardsChkBean, CardsChk
 
     @Override
     public CardsChk transformForUpdate(CardsChkBean source) {
-        return null;
+        CardsChk cardsChk = new CardsChk();
+        String loginUser = UserInfoHelper.getLoginUserInfo().getUserName();
+        source.setApprovalDate(dateMapper.selectTimestamp());
+        source.setApprovalUser(loginUser);
+        source.setUpdateUser(loginUser);
+        source.setUpdateDate(dateMapper.selectTimestamp());
+        dozerMapper.map(source, cardsChk);
+        return cardsChk;
     }
 }

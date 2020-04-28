@@ -1,0 +1,154 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/common/head :: head(title='Employee Inv | Mail sending')"></head>
+
+<body id="page-top">
+    <div id="wrapper">
+        <div th:replace="base :: menu"></div>
+        <div class="d-flex flex-column" id="content-wrapper-danger">
+                <div th:replace="base :: header"></div>
+            <div class="MainArea">
+                <hr>
+                <h3 class="text-black ml-2">セキュリティカード棚卸</h3>
+                <hr>
+            </div>
+            <div id="dataTable">
+                <div class="card shadow d-flex">
+                    <div class="card-body text-black">
+                        <form th:action="@{/card-inventory/save}" th:object="${cardInventoryForm}" method="post" data-leave-confirm="true">
+                            <div class="form-row">
+                                <div class="col-md-2 col-lg-2 col-xl-2 d-inline-flex align-items-xl-center"><label
+                                        class="text-nowrap mr-2" for="periodMonth">対象年月</label>
+                                    <select class="form-control" id="periodMonth"  name="periodMonth" th:field="*{periodMonth}">
+
+                                        <option value=''>－－－</option>
+                                        <!--<option th:each="d : ${periodMonths}" th:value="${d}" th:inline="text" th:selected="${#dates.format(d,'yyyy-MM-dd')} == ${#dates.format(currentDate,'yyyy-MM-dd')}">[[${#dates.format(d, 'yyyy年MM月')}]]</option>-->
+                                        <option th:each="d : ${periodMonths}" th:value="${d}" th:inline="text" th:selected="${d} == *{periodMonth}">[[${d}]]</option>
+
+                                    </select>
+                                </div>
+                                <div class="col-md-4 col-lg-4 col-xl-4 text-nowrap d-inline-flex align-items-xl-center">
+                                    <label class="mr-2" for="selectedDept">所属</label>
+                                    <select class="form-control" th:name="department" th:field="*{department}">
+                                        <option value="">－－－</option>
+                                        <option th:each="d : ${departmentList}" th:value="${d.deptCode}"
+                                                th:selected="${d.deptCode} == ${session?.user?.deptCode}" th:inline="text">[[${d.deptName}]]</option>
+                                    </select>
+                                </div>
+                                 <div
+                                class="col-md-1 col-lg-1 col-xl-1 offset-md-5 offset-lg-5 offset-xl-5 d-md-flex d-lg-flex d-xl-flex justify-content-md-end justify-content-lg-end justify-content-xl-end">
+                                    <div>
+                                        <!--<input class="form-control btn btn-danger searchbtn" type="submit" value="検索">-->
+                                        <a th:href="'/card-inventory/search/' + *{periodMonth}+'/'+*{department}"> <span class="form-control btn btn-danger searchbtn" th:text="検索"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive table-bordered-danger text-nowrap table mt-2" role="grid"
+                                 aria-describedby="dataTable_info" overflow-x="scroll" id="dataTableTable">
+                                <table class="table table-bordered-danger table-hover dataTable my-0 text-black"
+                                       id="dataTableTable">
+                                    <thead class="bg-danger">
+                                    <tr>
+                                        <th></th>
+                                        <th>所属</th>
+                                        <th>氏名</th>
+                                        <th>担当業務</th>
+                                        <th>作業場所</th>
+                                        <th>社員証</th>
+                                        <th>カード①</th>
+                                        <th>状況</th>
+                                        <th>カード②</th>
+                                        <th>状況</th>
+                                        <th>カード③</th>
+                                        <th>状況</th>
+                                        <th>カード④</th>
+                                        <th>状況</th>
+                                        <th>現物確認者</th>
+                                        <th>確認日</th>
+                                        <th>承認者</th>
+                                        <th>承認日</th>
+                                        <th>備考</th>
+                                        <th>確認</th>
+                                        <th>承認</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="rel, stat : ${cardInventoryForm.cardInventoryDtoList}">
+                                        <td><button class="btn btn-danger" type="button">編集</button></td>
+                                        <td class="UserName">
+                                        <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].firstName + ' '+ cardInventoryForm.cardInventoryDtoList[__${stat.index}__].lastName}" />
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].employeeId}"/>
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].periodMonth}"/>
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].firstName}"/>
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].lastName}"/>
+                                        </td>
+                                        <td class="deptName"> <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].deptName}"/></td>
+                                        <td class="WorkName"> <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].workName}"/></td>
+                                        <td class="PlaceName"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].placeName}"/></td>
+                                        <td class="EmpCardFlg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].empcardFlg}"/>〇</td>
+                                        <td class="Card1Name"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card1Nm}"/></td>
+                                        <td class="Card1Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card1Flg}"/>〇</td>
+                                        <td class="Card2Name"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card2Nm}"/></td>
+                                        <td class="Card2Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card2Flg}"/>〇</td>
+                                        <td class="Card3Name"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card3Nm}"/></td>
+                                        <td class="Card3Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card3Flg}"/>〇</td>
+                                        <td class="Card4Name"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card4Nm}"/></td>
+                                        <td class="Card4Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card4Flg}"/>〇</td>
+                                        <td class="ChkUser"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkUser}"/></td>
+                                        <td class="ChkDate"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkDate}"/></td>
+                                        <td class="AppUser"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalUser}"/></td>
+                                        <td class="AppDate"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalDate}"/></td>
+                                        <td class="notes"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].notes}"/></td>
+                                        <!--<td class="confirm"><input disabled type="checkbox" checked th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkFlg}"></td>-->
+                                        <td class="confirm"><input disabled type="checkbox" checked ></td>
+                                        <!--<td class="approve"><input type="checkbox" checked th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalFlg}"></td>-->
+                                        <td class="approve"><input type="checkbox" checked></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div
+                                        class="col-sm-12 col-md-12 col-lg-5 col-xl-5 d-inline-flex d-print-inline-flex d-md-inline-flex d-lg-inline-flex d-xl-inline-flex align-items-sm-center align-items-md-center align-items-lg-center align-items-xl-center">
+                                    <nav
+                                            class="d-lg-flex justify-content-lg-start justify-content-xl-start dataTables_paginate paging_simple_numbers">
+                                        <ul class="pagination">
+                                            <li class="page-item disabled"><a class="page-link-danger" href="#"><span
+                                                    aria-hidden="true">&lt;&lt;</span></a></li>
+                                            <li class="page-item disabled"><a class="page-link-danger" href="#"><span
+                                                    aria-hidden="true">&lt;</span></a></li>
+                                            <li class="page-item active"><a class="page-link-danger" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#">3</a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#">4</a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#">5</a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#">6</a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#"><span
+                                                    aria-hidden="true">&gt;</span></a></li>
+                                            <li class="page-item"><a class="page-link-danger" href="#" <span
+                                                    aria-hidden="true">&gt;&gt;</span></a></li>
+                                            <li class="page-item disabled mt-2"><span></span>(31-60/170)</span></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div
+                                        class="col-sm-12 col-md-12 col-lg-6 col-xl-6 offset-lg-1 offset-xl-1 justify-content-xl-end">
+                                    <div class="row">
+                                        <div class="col d-md-flex d-lg-flex justify-content-md-end justify-content-lg-end">
+                                            <input type="submit" class="btn btn-danger mr-2" value="保存">
+                                            <input type="reset" class="btn btn-danger mr-2" value="クリア">
+                                            <input type="submit" class="btn btn-danger mr-2" value="承認">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
