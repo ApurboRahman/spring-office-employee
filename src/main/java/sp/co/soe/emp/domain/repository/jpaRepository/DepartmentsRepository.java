@@ -13,7 +13,6 @@ import sp.co.soe.emp.domain.entity.DepartmentsExample;
 
 import java.util.List;
 
-
 @Repository
 public interface DepartmentsRepository extends JpaRepository<Departments, String> {
 
