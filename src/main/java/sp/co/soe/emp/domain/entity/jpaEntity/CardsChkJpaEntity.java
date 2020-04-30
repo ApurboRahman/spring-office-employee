@@ -3,6 +3,7 @@ package sp.co.soe.emp.domain.entity.jpaEntity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -22,6 +23,7 @@ public class CardsChkJpaEntity {
     /**
      * Column: work_nm
      */
+
     private String workNm;
 
     /**
@@ -37,36 +39,43 @@ public class CardsChkJpaEntity {
     /**
      * Column: card1_flg
      */
+    @Column(name = "card1_flg")
     private String card1Flg;
 
     /**
      * Column: card2_flg
      */
+    @Column(name = "card2_flg")
     private String card2Flg;
 
     /**
      * Column: card3_flg
      */
+    @Column(name = "card3_flg")
     private String card3Flg;
 
     /**
      * Column: card4_flg
      */
+    @Column(name = "card4_flg")
     private String card4Flg;
 
     /**
      * Column: card5_flg
      */
+    @Column(name = "card5_flg")
     private String card5Flg;
 
     /**
      * Column: card6_flg
      */
+    @Column(name = "card6_flg")
     private String card6Flg;
 
     /**
      * Column: card7_flg
      */
+    @Column(name = "card7_flg")
     private String card7Flg;
 
     /**

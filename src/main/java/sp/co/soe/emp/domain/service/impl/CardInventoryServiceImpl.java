@@ -100,6 +100,9 @@ public class CardInventoryServiceImpl implements CardInventoryService {
     public void save(CardInventoryForm cardInventoryForm, Model model, HttpServletResponse response) {
         List<CardInventoryDTO> cardInventoryList = cardInventoryForm.getCardInventoryDtoList();
         for(CardInventoryDTO dto:cardInventoryList){
+            dto.setChkUserId(getLoginUserInfo().getEmployeeId());
+            dto.setChkDate(getCurrentPeriodMonth());
+            dto.setChkFlg(Const.checkedFlag.toString());
             CardInformationBean cardRetainBean = cardInventoryDtoToBean.cardDtoToCardRetainBean(dto);
             CardsChkBean cardsChkBean = cardInventoryDtoToBean.cardDtoToCardChkBean(dto);
             cardInformationService.updateCardRetainInfo(cardRetainBean, Screen.CARD_INVENTORY.getScreenId());

@@ -31,7 +31,7 @@ public class CardInformationServiceImpl implements CardInformationService {
     @Override
     public void updateCardChkInfo(CardsChkBean bean, String screenId) {
         bean.setUpdatePgid(screenId);
-        CardsChk cardsChk = cardLedgerTransformer.transform(bean);
+        CardsChk cardsChk = cardLedgerTransformer.transformForUpdate(bean);
         cardsChkMapper.updateByPrimaryKeySelective(cardsChk);
     }
 
