@@ -47,4 +47,22 @@
             <b>returnDate</b>
         </field>
     </mapping>
+
+    <mapping date-format="yyyy-MM-dd">
+        <class-a>sp.co.soe.emp.app.bean.CardInformationBean</class-a>
+        <class-b>sp.co.soe.emp.app.dto.CardInventoryDTO</class-b>
+        <field>
+            <a>periodMonth</a>
+            <b>periodMonth</b>
+        </field>
+    </mapping>
+
+    <mapping date-format="yyyy-MM-dd" type="bi-directional">
+        <class-a>sp.co.soe.emp.app.bean.CardsChkBean</class-a>
+        <class-b>sp.co.soe.emp.app.dto.CardInventoryDTO</class-b>
+        <field>
+            <a>periodMonth</a>
+            <b>periodMonth</b>
+        </field>
+    </mapping>
 </mappings>

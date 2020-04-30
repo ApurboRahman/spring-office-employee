@@ -5,6 +5,8 @@
         <result column="period_month" jdbcType="DATE" property="periodMonth"/>
         <result column="employee_id" jdbcType="VARCHAR" property="employeeId"/>
         <result column="first_name" jdbcType="VARCHAR" property="firstName"/>
+        <result column="chkUserName" jdbcType="VARCHAR" property="chkUserName"/>
+        <result column="approverName" jdbcType="VARCHAR" property="approvalUserName"/>
         <result column="last_name" jdbcType="VARCHAR" property="lastName"/>
         <result column="dept_code" jdbcType="VARCHAR" property="deptCode"/>
         <result column="dept_name" jdbcType="VARCHAR" property="deptName"/>
@@ -20,9 +22,9 @@
         <result column="card2_flg" jdbcType="CHAR" property="card2Flg"/>
         <result column="card3_flg" jdbcType="CHAR" property="card3Flg"/>
         <result column="card4_flg" jdbcType="CHAR" property="card4Flg"/>
-        <result column="chk_user" jdbcType="VARCHAR" property="chkUser"/>
+        <result column="chk_user" jdbcType="VARCHAR" property="chkUserId"/>
         <result column="chk_date" jdbcType="TIMESTAMP" property="chkDate"/>
-        <result column="approval_user" jdbcType="VARCHAR" property="approvalUser"/>
+        <result column="approval_user" jdbcType="VARCHAR" property="approvalUserId"/>
         <result column="approval_date" jdbcType="TIMESTAMP" property="approvalDate"/>
         <result column="notes" jdbcType="VARCHAR" property="notes"/>
         <result column="chk_flg" jdbcType="CHAR" property="chkFlg"/>
@@ -34,18 +36,23 @@
                 ,dep.dept_code ,dep.dept_name ,chk.work_nm ,chk.place_nm
                 ,crd.empcard_owner ,crd.card1_nm ,crd.card2_nm ,crd.card3_nm
                 ,crd.card4_nm ,chk.empcard_flg ,chk.card1_flg ,chk.card2_flg
-                ,chk.card3_flg ,chk.card4_flg ,chk.chk_user ,chk.chk_date
-                ,chk.approval_user ,chk.approval_date ,chk.notes
+                ,chk.card3_flg ,chk.card4_flg ,chk.chk_user, chkUser.first_name as chkUserName,chk.chk_date
+                ,chk.approval_user, approver.first_name as approverName,chk.approval_date ,chk.notes
                 ,chk.chk_flg ,chk.approval_flg
          FROM EMPLOYEES_M emp
               ,DEPARTMENTS     dep
               ,CARDS_RETAIN    crd
               ,CARDS_CHK       chk
+              ,EMPLOYEES_M chkUser
+              ,EMPLOYEES_M approver
+
          WHERE emp.dept_code =#{department,jdbcType=VARCHAR}
          AND chk.period_month =#{currentDate,jdbcType=DATE}
          AND emp.dept_code = dep.dept_code
          AND emp.employee_id = crd.employee_id
          AND emp.employee_id = chk.employee_id
+         AND chkUser.employee_id = chk.chk_user
+         AND approver.employee_id = chk.approval_user
          ORDER BY emp.employee_id
 </select>
 </mapper>

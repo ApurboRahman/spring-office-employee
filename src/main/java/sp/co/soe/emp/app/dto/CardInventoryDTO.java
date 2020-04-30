@@ -8,7 +8,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class CardInventoryDTO {
-    private Date periodMonth;
+    private String periodMonth;
     private String employeeId;
     private String firstName;
     private String lastName;
@@ -26,9 +26,11 @@ public class CardInventoryDTO {
     private String card2Flg;
     private String card3Flg;
     private String card4Flg;
-    private String chkUser;
+    private String chkUserId;
+    private String chkUserName;
     private Date chkDate;
-    private String approvalUser;
+    private String approvalUserId;
+    private String approvalUserName;
     private Date approvalDate;
     private String notes;
     private String chkFlg;

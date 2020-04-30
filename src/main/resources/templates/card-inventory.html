@@ -83,9 +83,18 @@
                                             <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].firstName}"/>
                                             <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].lastName}"/>
                                         </td>
-                                        <td class="deptName"> <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].deptName}"/></td>
-                                        <td class="WorkName"> <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].workName}"/></td>
-                                        <td class="PlaceName"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].placeName}"/></td>
+                                        <td class="deptName">
+                                            <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].deptName}"/>
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].deptCode}"/>
+                                        </td>
+                                        <td class="WorkName">
+                                            <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].workName}"/>
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].workName}"/>
+                                        </td>
+                                        <td class="PlaceName">
+                                            <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].placeName}"/>
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].placeName}"/>
+                                        </td>
                                         <td class="EmpCardFlg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].empcardFlg}"/>〇</td>
                                         <td class="Card1Name"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card1Nm}"/></td>
                                         <td class="Card1Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card1Flg}"/>〇</td>
@@ -95,10 +104,16 @@
                                         <td class="Card3Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card3Flg}"/>〇</td>
                                         <td class="Card4Name"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card4Nm}"/></td>
                                         <td class="Card4Flg"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].card4Flg}"/>〇</td>
-                                        <td class="ChkUser"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkUser}"/></td>
-                                        <td class="ChkDate"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkDate}"/></td>
-                                        <td class="AppUser"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalUser}"/></td>
-                                        <td class="AppDate"><p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalDate}"/></td>
+                                        <td class="ChkUser">
+                                            <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkUserName}"/>
+                                            <input type="hidden" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkUserId}"/>
+                                        </td>
+                                        <td class="ChkDate"><p th:text="${#dates.format(cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkDate,'yyyy/MM/dd HH:mm:ss')}"/></td>
+                                        <td class="AppUser">
+                                            <p th:text="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalUserName}"/>
+                                            <input type="hidden" th:fields="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalUserId}"/>
+                                        </td>
+                                        <td class="AppDate"><p th:text="${#dates.format(cardInventoryForm.cardInventoryDtoList[__${stat.index}__].approvalDate,'yyyy/MM/dd HH:mm:ss')}"/></td>
                                         <td class="notes"><input type="text" th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].notes}"/></td>
                                         <!--<td class="confirm"><input disabled type="checkbox" checked th:field="${cardInventoryForm.cardInventoryDtoList[__${stat.index}__].chkFlg}"></td>-->
                                         <td class="confirm"><input disabled type="checkbox" checked ></td>
