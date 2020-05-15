@@ -2,10 +2,7 @@ package sp.co.soe.emp.app.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.resource.HttpResource;
 import sp.co.soe.emp.app.form.CardInventoryForm;
 import sp.co.soe.emp.common.util.Const;
@@ -29,6 +26,7 @@ public class CardInventoryController {
         return Const.CARD_INVENTORY;
     }
 
+
     @GetMapping("search/{periodMonth}/{department}")
     public String searchCardInventory(@PathVariable String periodMonth, @PathVariable String department, Model model) {
         cardInventoryService.searchCardInventory(periodMonth, department, model);
@@ -38,6 +36,12 @@ public class CardInventoryController {
     @PostMapping("save")
     public String save(@Valid CardInventoryForm cardInventoryForm, Model model, HttpServletResponse response) {
         cardInventoryService.save(cardInventoryForm, model, response);
+        return Const.CARD_INVENTORY;
+    }
+
+    @RequestMapping(value = "approve")
+    public String approve(@Valid CardInventoryForm cardInventoryForm, Model model, HttpServletResponse response) {
+        cardInventoryService.approve(cardInventoryForm, model, response);
         return Const.CARD_INVENTORY;
     }
 }

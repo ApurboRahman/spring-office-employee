@@ -1,0 +1,107 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common/head :: head(title='Employee Inv | Batch Schedule')"></head>
+
+
+<body id="page-top">
+    <div id="wrapper">
+        <div th:replace="base :: menu"></div>
+        <div class="d-flex flex-column" id="content-wrapper-danger">
+            <div th:replace="base :: header"></div>
+            <div class="MainArea">
+                <hr>
+                <h3 class="text-black ml-2">バッチスケジュール設定</h3>
+                <hr>
+            </div>
+            <form action="TBD" method="post">
+                <div id="MasterRegisterArea" class="text-black">
+                    <h5 class="text-black ml-2">〇マスタ登録</h5>
+                    <div class="text-black ml-3">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-2 col-xl-2 text-nowrap">
+                                <div class="d-lg-flex d-xl-flex justify-content-lg-end justify-content-xl-end"><label
+                                        for="MasterRegisterDay">マスタ登録日：</label></div>
+                            </div>
+                            <div class="col-md-12 col-lg-10 col-xl-10">
+                                <div><input class="form-control formDay" id="MasterRegisterDay" type="date"
+                                        placeholder="マスタ登録日　yyyy/mm/dd" name="MasterRegisterDay"><label
+                                        for="">マスタ登録日までにアップロードされたCSVファイルを取り込みます。<br>CSVファイルのアップロードは「マスタ登録」画面から取り込みを実施してください。</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div id="DaityoCreateArea">
+                    <h5 class="text-black ml-2">〇台帳作成</h5>
+                    <div class="text-black ml-3">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-2 col-xl-2 text-nowrap">
+                                <div class="d-lg-flex d-xl-flex justify-content-lg-end justify-content-xl-end"><label
+                                        for="DaityoCreateDay">台帳作成日：</label></div>
+                            </div>
+                            <div class="col-md-10 col-lg-10 col-xl-10">
+                                <div><input class="form-control formDay" id="DaityoCreateDay" type="date"
+                                        placeholder="台帳作成日　yyyy/mm/dd" name="DaityoCreateDay"><label
+                                        for="">台帳作成日に台帳が作成されます。</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div id="iraiArea">
+                    <h5 class="text-black ml-2">〇棚卸依頼<br></h5>
+                    <div class="text-black ml-3">
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div
+                                class="col-md-3 col-lg-2 col-xl-2 d-lg-flex d-xl-flex justify-content-lg-end justify-content-xl-end">
+                                <div><label for="MasterRegisterDay">棚卸依頼日：</label></div>
+                            </div>
+                            <div class="col-md-10 col-lg-10 col-xl-10">
+                                <div><input class="form-control formDay" id="MasterRegisterDay" type="date"
+                                        placeholder="棚卸依頼日　yyyy/mm/dd" name="MasterRegisterDay"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div
+                                class="col-md-3 col-lg-2 col-xl-2 d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-end justify-content-xl-end">
+                                <div><label class="d-lg-flex d-xl-flex justify-content-lg-end justify-content-xl-end"
+                                        for="deadline">締め切り日：</label></div>
+                            </div>
+                            <div class="col-md-10 col-lg-10 col-xl-10">
+                                <div><input class="form-control formDay" id="deadline" type="date"
+                                        placeholder="締め切り日　yyyy/mm/dd" name="deadline"><label
+                                        for="">棚卸依頼日に対象社員全員に対して棚卸依頼メールが送信されます。<br>締め切り日を設定してから送信してください。締め切り日がメール本文中に挿入されます。</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div id="RemindArea">
+                    <h5 class="text-black ml-2">〇リマインドメール送信</h5>
+                    <div class="text-black ml-3">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-2 col-xl-2 d-xl-flex justify-content-xl-end">
+                                <div><label for="RemindMailDay">リマインド日：</label></div>
+                            </div>
+                            <div class="col-lg-10 col-xl-10">
+                                <div><input class="form-control formDay" id="RemindMailDay" type="date"
+                                        placeholder="リマインド日　yyyy/mm/dd" name="RemindMailDay"><label
+                                        for="">指定日までに確認が完了していない社員と、<br>その課長およびセキュリティ委員に対してメールが送信されます。</label></div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="d-xl-flex justify-content-xl-start pad01" id="configArea"><input class="btn btn-primary"
+                        type="submit" value="設定" />
+                    <hr>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div th:replace="base :: footer"></div>
+</body>
+
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common/head :: head(title='Employee Inv | Inventory Confirmation')"></head>
+
+<body id="page-top">
+<div id="wrapper">
+    <div th:replace="base :: menu"></div>
+    <div class="d-flex flex-column" id="content-wrapper-danger">
+        <div th:replace="base :: header"></div>
+        <div class="MainArea">
+            <hr>
+            <h3 class="text-black ml-2">棚卸状況確認</h3>
+            <div style="max-width: none;">
+                <div class="text-black" style="margin-left: 5%;">
+                    <p></p>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div id="dataTable" class="text-black">
+            <div class="card shadow d-inline">
+                <div class="card-body bg-white">
+                    <form action="TBD" method="post">
+                        <div class="d-flex  mb-2">
+                            <div class="form-check"><input class="form-check-input" type="radio" id="CheckVpn"
+                                                           name="selectCardVPN" value="card" checked=""><label class="form-check-label"
+                                                                                                               for="formCheck-1">カード</label></div>
+                            <div class="form-check"><input class="form-check-input" type="radio" id="CheckVpn"
+                                                           name="selectCardVPN" value="vpn"><label class="form-check-label"
+                                                                                                   for="formCheck-2">VPN</label></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6 col-lg-6 col-xl-11">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12 col-xl-6 d-inline-flex mt-1"><label
+                                            class="text-nowrap d-xl-flex align-items-xl-end mr-1">所属&nbsp;</label><select
+                                            name="dept"
+                                            class="text-black form-control form-control-sm custom-select custom-select-sm dept-select">
+                                         
+                                        <option value="テスト事業本部デフォルト部">テスト事業本部デフォルト部</option>
+                                        <option value="テスト事業本部デフォルト部テストA課" selected>テスト事業本部デフォルト部テストA課</option>
+                                        <option value="テスト事業本部デフォルト部テストB課">テスト事業本部デフォルト部テストB課</option>
+                                        <option value="テスト事業本部デフォルト部テストC課">テスト事業本部デフォルト部テストC課</option>
+                                        <option value="テスト事業本部デフォルト部テストD課">テスト事業本部デフォルト部テストD課</option>
+                                    </select></div>
+                                    <div
+                                            class="col-md-12 col-lg-12 col-xl-3 text-nowrap d-inline-flex justify-content-xl-start mt-1">
+                                        <label class="mr-1">確認状況</label><select name="confirm"
+                                                                                class="text-black form-control form-control-sm custom-select custom-select-sm">
+                                           <option value="" selected></option>
+                                           <option value="済">済</option>
+                                           <option value="未">未</option></select></div>
+                                    <div
+                                            class="col-md-12 col-lg-12 col-xl-3 text-nowrap d-inline-flex justify-content-xl-start mt-1">
+                                        <label class="mr-1">承認状況</label><select name="appeove"
+                                                                                class="text-black form-control form-control-sm custom-select custom-select-sm">
+                                           <option value="" selected></option>
+                                           <option value="済">済</option>
+                                           <option value="未">未</option>
+                                    </select></div>
+                                </div>
+                            </div> <div class="col-md-7 col-lg-7 col-xl-1 text-nowrap d-xl-flex justify-content-xl-end"><input class="btn btn-primary" type="submit" value="検索"/></div>
+                        </div>
+                    </form>
+                    <div class="table-responsive table-bordered text-nowrap mt-0 my-2" overflow-x="scroll"
+                         roll="grid">
+                        <table class="table table-bordered table-hover text-black my-0" overflow-x="scroll">
+                            <thead class="bg-light">
+                            <tr>
+                                <th>氏名</th>
+                                <th>所属</th>
+                                <th class="text-center">確認</th>
+                                <th class="text-center">承認</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="UserName">田中 一郎</td>
+                                <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                <td class="text-center ConfStatus">済</td>
+                                <td class="text-center appStatus">済</td>
+                            </tr>
+                            <tr>
+                                <td class="UserName">田中 二郎</td>
+                                <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                <td class="text-center ConfStatus">済</td>
+                                <td class="text-center appStatus notCheck">未</td>
+                            </tr>
+                            <tr>
+                                <td class="UserName">田中 三郎</td>
+                                <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                <td class="text-center ConfStatus">済</td>
+                                <td class="text-center appStatus notCheck">未</td>
+                            </tr>
+                            <tr>
+                                <td class="UserName">田中 四郎</td>
+                                <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                <td class="text-center ConfStatus notCheck">未</td>
+                                <td class="text-center appStatus notCheck">未</td>
+                            </tr>
+                            <tr>
+                                <td class="UserName">田中 五郎</td>
+                                <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                <td class="text-center ConfStatus">済</td>
+                                <td class="text-center appStatus notCheck">未</td>
+                            </tr>
+                            <tr>
+                                <td class="UserName">田中 六郎</td>
+                                <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                <td class="text-center ConfStatus">済</td>
+                                <td class="text-center appStatus notCheck">未</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div
+                                class="col-md-6 d-xl-flex align-items-center align-items-sm-center align-items-md-center align-items-lg-center align-items-xl-center">
+                            <nav class="dataTables_paginate paging_simple_numbers">
+                                <ul class="pagination">
+                                    <li class="page-item disabled"><a class="page-link" href="#"><span
+                                            aria-hidden="true">&lt;&lt;</span></a></li>
+                                    <li class="page-item disabled"><a class="page-link" href="#"><span
+                                            aria-hidden="true">&lt;</span></a></li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item disabled"><a class="page-link" href="#"><span
+                                            aria-hidden="true">&gt;</span></a></li>
+                                    <li class="page-item disabled"><a class="page-link" href="#" <span
+                                            aria-hidden="true">&gt;&gt;</span></a></li>
+                                    <li class="page-item disabled mt-2"><span></span>(1-6/6)</span></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="base :: footer"></div>
+</body>
+
+</html>

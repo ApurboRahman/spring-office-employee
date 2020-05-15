@@ -17,4 +17,6 @@ public interface CardInventoryService {
     void searchCardInventory(String periodMonth, String department, Model model);
 
     void save(CardInventoryForm cardInventoryForm, Model model, HttpServletResponse response);
+
+    void approve(CardInventoryForm cardInventoryForm, Model model, HttpServletResponse response);
 }

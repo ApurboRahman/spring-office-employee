@@ -25,6 +25,11 @@ public class Const {
 	public static final String SEND = "/send";
 	public static final String REMINDER= "/reminder";
 	public static final String CARD_INVENTORY_URL= "/card-inventory";
+	public static final String VPN_INVENTORY_URL= "/vpn-inventory";
+	public static final String MONTH_CLOSE_URL= "/monthly-closing";
+	public static final String USER_PERMISSION_URL = "user-permission";
+	public static final String BATCH_SCHEDULE_URL = "batch-schedule";
+	public static final String INVENTORY_STATUS_URL = "inventory-status";
 
 	//static folders location
 	public static final String CSS = "/css/**";
@@ -49,6 +54,11 @@ public class Const {
 	public static final String LEDGER_CREATE = "ledger-creation";
 	public static final String MAIL_SEND = "mail-send";
 	public static final String CARD_INVENTORY = "card-inventory";
+	public static final String VPN_INVENTORY = "vpn-inventory";
+	public static final String MONTH_CLOSE= "/month-close";
+	public static final String USER_PERMISSION = "user-permission";
+	public static final String BATCH_SCHEDULE = "batch-schedule";
+	public static final String INVENTORY_STATUS = "inventory-status";
 	public static final String LAYOUT = "layout";
 	public static final String INVENTORY_EMAIL_TEMPLATE= "mail/inventoryEmail";
 	public static final String REMINDER_EMAIL_TEMPLATE= "mail/reminderEmail";

@@ -1,0 +1,46 @@
+a.acctext {
+  font-size: small;
+  color: black;
+}
+
+#acclist {
+  color: black;
+}
+
+#TanaMenuBtn[aria-expanded=true]:after {
+    content: "-棚卸";
+}
+  
+#TanaMenuBtn[aria-expanded=false]:after {
+    content: "+棚卸";
+}
+  
+#KanriMenuBtn[aria-expanded=false]:after {
+  content: "+管理者";
+}
+  
+#KanriMenuBtn[aria-expanded=true]:after {
+    content: "-管理者";
+}
+    
+  
+#logout {
+  color: rgb(133,135,150);
+}
+
+#MyName {
+  margin-bottom: 0px;
+}
+
+.text-black {
+  color: black;
+}
+
+.formDay {
+  width: 500px;
+}
+
+.pad01 {
+  padding-left: 1%;
+}
+

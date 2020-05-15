@@ -1,0 +1,34 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common/head :: head(title='Employee Inv | Monthly Closing')"></head>
+
+
+<body id="page-top">
+<div id="wrapper">
+    <div th:replace="base :: menu"></div>
+    <div class="d-flex flex-column" id="content-wrapper-danger">
+        <div th:replace="base :: header"></div>
+        <div class="MainArea">
+            <hr>
+            <h3 class="text-black ml-2">月次締め</h3>
+            <p></p>
+            <div>
+                <div class="text-black ml5p"><span
+                        class="text-nowrap text-black">月次締めボタンを押すとn月度の月次締めを行います。<br>誤って月次締めを行った場合は、月次締め解除ボタンを押すことで再度棚卸業務を行うことができます</span>
+                    <p></p>
+                </div>
+            </div>
+            <div class="d-flex">
+                <form id="MonthCloseBtn" class="ml5p mr5p" action="" method="post">
+                    <input class="btn btn-danger" type="submit" value="月次締め" /></form>
+                <form id="ResetMonthCloseBtn" action="" method="post">
+                    <input class="btn btn-danger" type="submit" value="月次締め解除" /></form>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>
+<div th:replace="base :: footer"></div>
+</body>
+
+</html>
