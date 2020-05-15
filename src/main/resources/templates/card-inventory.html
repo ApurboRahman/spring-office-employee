@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="col-md-4 col-lg-4 col-xl-4 text-nowrap d-inline-flex align-items-xl-center">
                                     <label class="mr-2" for="selectedDept">所属</label>
-                                    <select class="form-control" th:name="department" th:field="*{department}">
+                                    <select class="form-control" th:id="department" th:name="department" th:field="*{department}">
                                         <option value="">－－－</option>
                                         <option th:each="d : ${departmentList}" th:value="${d.deptCode}"
                                                 th:selected="${d.deptCode} == ${session?.user?.deptCode}" th:inline="text">[[${d.deptName}]]</option>
@@ -39,8 +39,8 @@
                                  <div
                                 class="col-md-1 col-lg-1 col-xl-1 offset-md-5 offset-lg-5 offset-xl-5 d-md-flex d-lg-flex d-xl-flex justify-content-md-end justify-content-lg-end justify-content-xl-end">
                                     <div>
-                                        <!--<input class="form-control btn btn-danger searchbtn" type="submit" value="検索">-->
-                                        <a th:href="'/card-inventory/search/' + *{periodMonth}+'/'+*{department}"> <span class="form-control btn btn-danger searchbtn" th:text="検索"></span></a>
+                                        <input class="form-control btn btn-danger searchbtn" type="button" value="検索">
+                                        <!--<a th:href="'/card-inventory/search/' + *{periodMonth}+'/'+*{department}"> <span class="form-control btn btn-danger searchbtn" th:text="検索"></span></a>-->
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,8 @@
                                         <div class="col d-md-flex d-lg-flex justify-content-md-end justify-content-lg-end">
                                             <input type="submit" class="btn btn-danger mr-2" value="保存">
                                             <input type="reset" class="btn btn-danger mr-2" value="クリア">
-                                            <input type="submit" class="btn btn-danger mr-2" value="承認">
+                                            <!--<input form="approve" type="button" th:id="approve" class="btn btn-danger mr-2" value="承認">-->
+                                            <button th:form="approveForm" class="btn btn-danger" th:id="approveButton"><i class="icon-ok"></i> 承認</button>
                                         </div>
                                     </div>
                                 </div>
@@ -164,6 +165,7 @@
             </div>
         </div>
     </div>
+    <div th:replace="base :: footer"></div>
 </body>
 
 </html>

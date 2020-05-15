@@ -69,14 +69,17 @@ public class CardInventoryServiceImpl implements CardInventoryService {
         List<Departments> departmentList = getDepartmentList();
         if (null == periodMonth) {
             periodMonth = dateMapper.selectFirstDayOfMonth();
+            //This line will be removed
+           // periodMonth = dateMapper.selectFirstDayOfPreviousMonth();
         }
         if (Const.NULL_STRING == department) {
             department = getLoginUserInfo().getDeptCode();
         }
 
         List<CardInventoryDTO> cardInfoList = cardInventoryMapper.getCardInventory(periodMonth, department);
-        cardInfoList.stream().map(card->DateUtil.strToDt(card.getPeriodMonth().toString(),"yyyy-MM-dd")).collect(Collectors.toList());
         cardInventoryForm.setPeriodMonth(DateUtil.dtToStr(getCurrentPeriodMonth()));
+        //This line will be removed
+        //cardInventoryForm.setPeriodMonth(DateUtil.dtToStr(periodMonth));
         cardInventoryForm.setDepartment(department);
         cardInventoryForm.setCardInventoryDtoList(cardInfoList);
         model.addAttribute("periodMonths", periodMonths);
@@ -111,6 +114,11 @@ public class CardInventoryServiceImpl implements CardInventoryService {
         }
 
         index(model, DateUtil.strToDt(cardInventoryForm.getPeriodMonth(), "yyyy-MM-dd"), cardInventoryForm.getDepartment());
+    }
+
+    @Override
+    public void approve(CardInventoryForm cardInventoryForm, Model model, HttpServletResponse response) {
+
     }
 
     private List<Departments> getDepartmentList() {

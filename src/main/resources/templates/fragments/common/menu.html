@@ -46,7 +46,7 @@
                             	</a>
                             </li>
                              <li th:if="${#strings.contains(session.menus,'__#{batchSchedule}__')}">
-                            	<a href="@{batch-schedule}" id="MenuBatchSchedule" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<a th:href="@{/batch-schedule}" id="MenuBatchSchedule" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
                             	<span th:text="__#{batchScheduleTitle}__"></span>
                             	</a>
                             </li>
@@ -56,7 +56,7 @@
                             	</a>
                             </li>
                             <li th:if="${#strings.contains(session.menus,'__#{inventoryStatus}__')}">
-                            	<a th:href="@{inventory-status}" id="MenuStatusConfirm" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
+                            	<a th:href="@{/inventory-status}" id="MenuStatusConfirm" th:class="${#httpServletRequest.requestURI == '' ? 'text-white' : 'acctext'}">
                             	<span th:text="__#{inventoryStatusTitle}__"></span>
                             	</a>
                             </li>

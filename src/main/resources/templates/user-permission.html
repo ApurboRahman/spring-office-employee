@@ -1,0 +1,126 @@
+<!DOCTYPE html >
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/common/head :: head(title='Employee Inv | VPN Inventory')"></head>
+
+
+<body id="page-top">
+    <div id="wrapper">
+        <div th:replace="base :: menu"></div>
+      <div class="d-flex flex-column" id="content-wrapper-danger">
+          <div th:replace="base :: header"></div>
+          <div class="MainArea">
+                <hr>
+                <h3 class="text-black ml-2">ユーザー権限設定</h3>
+                <hr>
+            </div>
+            <div>
+                <div class="card d-inline">
+                    <div class="card-body bg-white text-black">
+                        <form>
+                            <div class="form-row">
+                                <div class="col-md-2 col-lg-2 col-xl-2 d-inline-flex align-items-xl-center"><label
+                                        class="text-nowrap mr-2" for="selectedMonth">対象年月</label><select
+                                        class="form-control" name="selectedMonth">
+                                        <option value="2019年10月">2019年10月</option>
+                                        <option value="2019年11月">2019年11月</option>
+                                        <option value="2019年12月" selected="">2019年12月</option>
+                                        <option value="2020年1月">2020年1月</option>
+                                        <option value="2020年2月">2020年2月</option>
+                                    </select></div>
+                                <div class="col-md-4 col-lg-4 col-xl-4 text-nowrap d-inline-flex align-items-xl-center">
+                                    <label class="mr-2" for="selectedDept">所属</label><select class="form-control"
+                                        name="selectedDept">
+                                        <option value="テスト事業本部デフォルト部">テスト事業本部デフォルト部</option>
+                                        <option value="テスト事業本部デフォルト部テストA課" selected="">テスト事業本部デフォルト部テストA課</option>
+                                        <option value="テスト事業本部デフォルト部テストB課">テスト事業本部デフォルト部テストB課</option>
+                                        <option value="テスト事業本部デフォルト部テストC課">テスト事業本部デフォルト部テストC課</option>
+                                    </select></div>
+                                <div
+                                    class="col-md-1 col-lg-1 col-xl-1 offset-md-5 offset-lg-5 offset-xl-5 d-md-flex d-lg-flex d-xl-flex justify-content-md-end justify-content-lg-end justify-content-xl-end">
+                                    <div class="d-xl-flex justify-content-xl-end"><input
+                                            class="form-control btn btn-primary searchbtn" type="submit" value="検索">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="table-responsive table-bordered table mt-2" id="dataTable" role="grid"
+                            overflow-x="scroll">
+                            <table class="table table-bordered table-hover text-black mb-0" id="dataTable"
+                                overflow-x="scroll">
+                                <thead class="text-nowrap bg-light">
+                                    <tr>
+                                        <th>氏名</th>
+                                        <th>所属</th>
+                                        <th class="text-center">セキュリティ委員</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="UserName">田中 一郎</td>
+                                        <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                        <td class="text-center justify-content-lg-center"><input type="checkbox"
+                                                id="securityCheck"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="UserName">田中 二郎</td>
+                                        <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                        <td class="text-center justify-content-lg-center"><input type="checkbox"
+                                                id="securityCheck"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="UserName">田中 三郎</td>
+                                        <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                        <td class="text-center justify-content-lg-center"><input type="checkbox"
+                                                id="securityCheck"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="UserName">田中 四郎</td>
+                                        <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                        <td class="text-center justify-content-lg-center"><input type="checkbox"
+                                                id="securityCheck"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="UserName">田中 五郎</td>
+                                        <td class="deptName">テスト事業本部デフォルト部テストA課</td>
+                                        <td class="text-center justify-content-lg-center"><input type="checkbox"
+                                                id="securityCheck"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div
+                                class="col-sm-12 col-md-12 col-lg-5 col-xl-5 d-inline-flex d-print-inline-flex d-md-inline-flex d-lg-inline-flex d-xl-inline-flex align-items-sm-center align-items-md-center align-items-lg-center align-items-xl-center">
+                                <nav
+                                    class="d-lg-flex justify-content-lg-start justify-content-xl-start dataTables_paginate paging_simple_numbers">
+                                    <ul class="pagination">
+                                        <li class="page-item disabled"><a class="page-link" href="#"><span
+                                                    aria-hidden="true">&lt;&lt;</span></a></li>
+                                        <li class="page-item disabled"><a class="page-link" href="#"><span
+                                                    aria-hidden="true">&lt;</span></a></li>
+                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item disabled"><a class="page-link" href="#"><span
+                                                    aria-hidden="true">&gt;</span></a></li>
+                                        <li class="page-item disabled"><a class="page-link" href="#" <span
+                                                aria-hidden="true">&gt;&gt;</span></a></li>
+                                        <li class="page-item disabled mt-2"><span></span>(1～5/5)</span></li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div
+                                class="col-sm-12 col-md-12 col-lg-6 col-xl-6 offset-lg-1 offset-xl-1 justify-content-xl-end">
+                                <div class="row">
+                                    <div class="col d-md-flex d-lg-flex justify-content-md-end justify-content-lg-end">
+                                        <input type="submit" class="btn btn-primary mr-2" value="登録">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
